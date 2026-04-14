@@ -1,0 +1,7 @@
+oracle_key
+oracle_key.pub
+ssh_key_new
+ssh_key_temp
+.DS_Store
+node_modules
+task.md

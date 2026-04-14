@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHITRAGUPTA - Accounts AI | ALGO IQ - Your Digital Accountant</title>
+    <meta name="description" content="CHITRAGUPTA - Accounts AI. Your AI-powered accountant that manages accounts, bills, payments, compliance, and financial tracking - automatically, 24/7.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #e17055;
+            --primary-light: #f39c12;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --accent: #e17055;
+            --accent-light: #fab1a0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255,255,255,0.06);
+            --gradient-primary: linear-gradient(135deg, #e17055 0%, #f39c12 100%);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: #f39c12; bottom: -150px; right: -150px; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366, #20b356);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0%, 100% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 10px 50px rgba(37, 211, 102, 0.6); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(3, 3, 8, 0.9);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text { color: var(--text); }
+        .logo span { color: var(--accent-light); }
+
+        nav { display: flex; gap: 36px; align-items: center; }
+        nav a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s; }
+        nav a:hover { color: var(--text); }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(225, 112, 85, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(225, 112, 85, 0.5); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border: 1px solid var(--border-light);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 140px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(225, 112, 85, 0.2), transparent 60%);
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(225, 112, 85, 0.1);
+            border: 1px solid rgba(225, 112, 85, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--accent-light);
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 5.5vw, 62px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            max-width: 540px;
+        }
+
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+        .hero-buttons .btn { padding: 16px 32px; font-size: 16px; }
+
+        /* Section Headers */
+        .section-header { text-align: center; margin-bottom: 56px; position: relative; z-index: 1; }
+        .section-header h2 { font-size: 42px; font-weight: 700; margin-bottom: 16px; }
+        .section-header p { color: var(--text-muted); font-size: 17px; max-width: 600px; margin: 0 auto; }
+
+        /* What it does */
+        .what-it-does { padding: 100px 0; position: relative; z-index: 1; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(225, 112, 85, 0.4);
+            box-shadow: 0 24px 50px rgba(0,0,0,0.3);
+        }
+
+        .feature-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+        .feature-card h3 i { color: var(--accent); }
+        .feature-card ul { list-style: none; margin-top: 16px; }
+        .feature-card li { padding: 10px 0; color: var(--text-muted); font-size: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+        .feature-card li:last-child { border-bottom: none; }
+        .feature-card li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--success); font-size: 12px; }
+
+        /* Problems */
+        .problems { padding: 100px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .problem-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .problem-card:hover { transform: translateY(-4px); border-color: var(--warning); }
+
+        .problem-card i {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--warning);
+        }
+
+        .problem-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        .problem-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* Impact Metrics */
+        .metrics { padding: 80px 0; position: relative; z-index: 1; }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 42px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metric-card p { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+
+        /* Comparison */
+        .comparison { padding: 100px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .comp-table {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .comp-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-row:last-child { border-bottom: none; }
+
+        .comp-before, .comp-after {
+            padding: 24px 28px;
+        }
+
+        .comp-before { background: rgba(245, 158, 11, 0.08); }
+        .comp-after { background: rgba(16, 185, 129, 0.08); }
+
+        .comp-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .comp-before .comp-label { color: var(--warning); }
+        .comp-after .comp-label { color: var(--success); }
+
+        .comp-row h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+        .comp-row p { font-size: 14px; color: var(--text-muted); }
+
+        /* Features */
+        .features { padding: 100px 0; position: relative; z-index: 1; }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .feat-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        .feat-card h4 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+        .feat-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* Perfect For */
+        .perfect-for { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .industry-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* Need Analysis */
+        .need-analysis { padding: 100px 0; position: relative; z-index: 1; }
+
+        .need-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .need-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 24px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .need-item i { color: var(--warning); font-size: 20px; }
+        .need-item span { font-size: 15px; }
+
+        /* ROI */
+        .roi-section { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; text-align: center; }
+
+        .roi-content h2 { font-size: 36px; font-weight: 700; margin-bottom: 20px; }
+        .roi-content p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(225, 112, 85, 0.2), transparent 60%);
+        }
+
+        .cta-section h2 { font-size: 42px; font-weight: 700; margin-bottom: 16px; }
+        .cta-section p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        footer {
+            padding: 50px 0 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: var(--secondary);
+        }
+
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero { padding: 120px 0 60px; }
+            .metrics-grid { grid-template-columns: 1fr 1fr; }
+            .feat-grid { grid-template-columns: 1fr; }
+            .industries-grid { grid-template-columns: 1fr 1fr; }
+            .comp-row { grid-template-columns: 1fr; }
+            .need-grid { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span class="logo-text">ALGO <span>IQ</span></span>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="profitability.html">ROI</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="demo.html">Demo</a>
+                <a href="deployment.html">Deployment</a>
+            </nav>
+            <a href="https://wa.me/919999999999" class="btn btn-primary">
+                <i class="fab fa-whatsapp"></i> Chat Now
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-calculator"></i> Accounts AI
+                </div>
+                <h1>CHITRAGUPTA<br><span class="highlight">Accounts AI</span></h1>
+                <p class="hero-subtitle">"Har transaction ka hisaab – bilkul sahi, bilkul time par"<br><br>Your AI-powered accountant that manages accounts, bills, payments, compliance, and financial tracking — automatically, accurately, 24/7.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/919999999999" class="btn btn-primary">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Demo
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <i class="fas fa-play"></i> See Features
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="what-it-does">
+        <div class="container">
+            <div class="section-header">
+                <h2>What CHITRAGUPTA Actually Does</h2>
+                <p>Daily work automation that replaces manual accounting + clerical workload</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-line"></i> Daily Financial Monitoring</h3>
+                    <ul>
+                        <li>Daily purchase & sales bill verification</li>
+                        <li>Expense tracking & categorization</li>
+                        <li>Cash flow monitoring (real-time)</li>
+                        <li>Bank account tracking</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-file-invoice"></i> Billing & Payments</h3>
+                    <ul>
+                        <li>Invoice generation & tracking</li>
+                        <li>Payment reminders (auto follow-up)</li>
+                        <li>Electricity, phone & utility bill tracking</li>
+                        <li>Ensures on-time payments</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-book"></i> Accounting Operations</h3>
+                    <ul>
+                        <li>Bank entry verification</li>
+                        <li>Data preparation for Tally / ERP</li>
+                        <li>Ledger maintenance support</li>
+                        <li>Automated reconciliation</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-shield-alt"></i> Business Controls</h3>
+                    <ul>
+                        <li>Employee attendance tracking</li>
+                        <li>Expense approvals & anomalies detection</li>
+                        <li>Alerts for unusual transactions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="problems">
+        <div class="container">
+            <div class="section-header">
+                <h2>Problems CHITRAGUPTA Solves</h2>
+                <p>Accounting errors and inefficiencies silently reduce your profit</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Calculation Errors</h3>
+                    <p>Manual entries lead to mistakes in GST, invoices, payroll.</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <h3>Invoice & Payment Chaos</h3>
+                    <p>Lost bills, delayed collections, missed follow-ups.</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Time Wastage</h3>
+                    <p>20–30 hours/week wasted on repetitive accounting tasks.</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Compliance Risks</h3>
+                    <p>Late GST filing, penalties, audit stress.</p>
+                </div>
+                <div class="problem-card">
+                    <i class="fas fa-eye-slash"></i>
+                    <h3>No Financial Visibility</h3>
+                    <p>Business owners don't know real-time profit or cash flow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="metrics">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">99%</div>
+                    <p>Error-Free Accounting</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">80%</div>
+                    <p>Reduction in Manual Work</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">3X</div>
+                    <p>Faster Invoicing</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">24/7</div>
+                    <p>Financial Monitoring</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">0</div>
+                    <p>Missed Payments</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison">
+        <div class="container">
+            <div class="section-header">
+                <h2>Before vs After</h2>
+                <p>Traditional accounting vs CHITRAGUPTA AI</p>
+            </div>
+            <div class="comp-table">
+                <div class="comp-row">
+                    <div class="comp-before">
+                        <div class="comp-label">Before (Traditional)</div>
+                        <h4>Accountant Dependent</h4>
+                        <p>Delays in entries & reports, human errors, no real-time visibility</p>
+                    </div>
+                    <div class="comp-after">
+                        <div class="comp-label">After (With CHITRAGUPTA)</div>
+                        <h4>99% Error-Free</h4>
+                        <p>No manual mistakes in entries, invoices, or reports</p>
+                    </div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-before">
+                        <div class="comp-label">Before</div>
+                        <h4>Time Wastage</h4>
+                        <p>Manual follow-ups, scattered data, missed payments</p>
+                    </div>
+                    <div class="comp-after">
+                        <div class="comp-label">After</div>
+                        <h4>80% Time Saved</h4>
+                        <p>Clerical + repetitive work fully automated</p>
+                    </div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-before">
+                        <div class="comp-label">Before</div>
+                        <h4>No Visibility</h4>
+                        <p>Confused cash flow, late payments & penalties</p>
+                    </div>
+                    <div class="comp-after">
+                        <div class="comp-label">After</div>
+                        <h4>Real-Time Control</h4>
+                        <p>Know your cash flow, expenses, profit anytime</p>
+                    </div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-before">
+                        <div class="comp-label">Before</div>
+                        <h4>Slow Collections</h4>
+                        <p>Manual invoicing, forgotten follow-ups</p>
+                    </div>
+                    <div class="comp-after">
+                        <div class="comp-label">After</div>
+                        <h4>3X Faster</h4>
+                        <p>Auto invoices + automated payment reminders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>CHITRAGUPTA Features</h2>
+                <p>Smart accounting automation for your business</p>
+            </div>
+            <div class="feat-grid">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-receipt"></i></div>
+                    <h4>Smart Invoicing</h4>
+                    <p>Auto-create invoices with tracking & payment links</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-wallet"></i></div>
+                    <h4>Expense Intelligence</h4>
+                    <p>Auto categorization & smart expense analysis</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h4>Real-Time Reports</h4>
+                    <p>P&L, Balance Sheet, Cash Flow anytime</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-file-invoice"></i></div>
+                    <h4>Tax Automation</h4>
+                    <p>GST, TDS calculation + reminders</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-users"></i></div>
+                    <h4>Payroll Automation</h4>
+                    <p>Salary, attendance, deductions handled</p>
+                </div>
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fas fa-university"></i></div>
+                    <h4>Bank Reconciliation</h4>
+                    <p>Auto-match bank & ledger entries</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="perfect-for">
+        <div class="container">
+            <div class="section-header">
+                <h2>Perfect For All Industries</h2>
+                <p>Most universal AI employee – every business needs accounting</p>
+            </div>
+            <div class="industries-grid">
+                <div class="industry-card">Traders & Wholesalers</div>
+                <div class="industry-card">Retail Shops</div>
+                <div class="industry-card">Manufacturers</div>
+                <div class="industry-card">Service Businesses</div>
+                <div class="industry-card">Agencies</div>
+                <div class="industry-card">Startups & SMEs</div>
+                <div class="industry-card">CA Firms</div>
+                <div class="industry-card">Any Business</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="need-analysis">
+        <div class="container">
+            <div class="section-header">
+                <h2>Need Analysis</h2>
+                <p>Why you should get CHITRAGUPTA</p>
+            </div>
+            <div class="need-grid">
+                <div class="need-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Multiple bills & transactions daily</span>
+                </div>
+                <div class="need-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Cash flow confusion</span>
+                </div>
+                <div class="need-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Dependency on accountant</span>
+                </div>
+                <div class="need-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Late payments or penalties</span>
+                </div>
+                <div class="need-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>No real-time financial clarity</span>
+                </div>
+                <div class="need-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Manual data entry errors</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi-section">
+        <div class="container">
+            <div class="roi-content">
+                <h2>ROI Perspective</h2>
+                <p>Instead of hiring 1-2 accountants, paying penalties, losing money in errors — CHITRAGUPTA gives lower cost, higher accuracy, and better control.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Automate Your Accounting Today</h2>
+            <p>Get CHITRAGUPTA – Accounts AI. Your business deserves perfect financial control.</p>
+            <div class="cta-buttons">
+                <a href="book-demo.html" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Book Free Demo
+                </a>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ALGO IQ. All rights reserved. | <a href="index.html">Back to Home</a></p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>

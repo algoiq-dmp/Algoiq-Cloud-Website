@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARJUN AI - Social Media Creatives | ALGO IQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #030308;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --success: #10b981;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255,255,255,0.06);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: rgba(3, 3, 8, 0.95);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            text-align: center;
+        }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 42px; font-weight: 700; margin-bottom: 16px; text-align: center; }
+        h1 span { color: var(--accent); }
+        .subtitle { font-size: 18px; color: var(--text-muted); text-align: center; margin-bottom: 48px; }
+        
+        .creative-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+        
+        .creative-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        
+        .creative-preview {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background: #000;
+        }
+        
+        .creative-info {
+            padding: 24px;
+        }
+        
+        .creative-info h3 { font-size: 18px; margin-bottom: 8px; }
+        .creative-info p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+        
+        .social-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        
+        /* Creative 1 - Square */
+        .creative-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .creative-1::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245,158,11,0.3) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+        }
+        .creative-1 .icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 24px;
+        }
+        .creative-1 h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .creative-1 p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 280px;
+        }
+        
+        /* Creative 2 - Story */
+        .creative-2 {
+            width: 320px;
+            height: 568px;
+            background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 30px;
+            position: relative;
+        }
+        .creative-2::before {
+            content: '🏹';
+            position: absolute;
+            top: 40px;
+            font-size: 48px;
+        }
+        .creative-2 h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            margin-top: 60px;
+        }
+        .creative-2 .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .creative-2 .feature i { color: var(--success); }
+        
+        /* Creative 3 - Comparison */
+        .creative-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+        .creative-3 h2 {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .creative-3 .compare-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        .creative-3 .compare-row .bad { color: #ef4444; }
+        .creative-3 .compare-row .good { color: var(--success); }
+        
+        /* Creative 4 - Stats */
+        .creative-4 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(245,158,11,0.1) 0%, rgba(16,185,129,0.1) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+        .creative-4 .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .creative-4 .stat {
+            text-align: center;
+        }
+        .creative-4 .stat h3 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .creative-4 .stat p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        
+        /* Creative 5 - Quote */
+        .creative-5 {
+            width: 400px;
+            height: 400px;
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+        .creative-5::before {
+            content: '"';
+            font-size: 120px;
+            color: var(--accent);
+            opacity: 0.3;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: Georgia, serif;
+        }
+        .creative-5 p {
+            font-size: 20px;
+            font-style: italic;
+            max-width: 300px;
+            margin-bottom: 24px;
+        }
+        .creative-5 .author {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Creative 6 - CTA */
+        .creative-6 {
+            width: 320px;
+            height: 568px;
+            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            color: #000;
+        }
+        .creative-6 h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .creative-6 p {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+        .creative-6 .cta-btn {
+            background: #000;
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        @media (max-width: 900px) {
+            .creative-grid { grid-template-columns: 1fr; }
+            .creative-1, .creative-3, .creative-4, .creative-5 { width: 100%; max-width: 400px; }
+            .creative-2, .creative-6 { width: 100%; max-width: 320px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+            <span>ALGO IQ</span>
+        </a>
+    </header>
+    
+    <div class="container">
+        <h1>ARJUN AI - <span>Social Media Creatives</span></h1>
+        <p class="subtitle">Download ready-to-post visuals for Instagram, Facebook, LinkedIn & WhatsApp</p>
+        
+        <div class="creative-grid">
+            <!-- Creative 1: Main Launch -->
+            <div class="creative-card">
+                <div class="creative-preview">
+                    <div class="creative-1">
+                        <div class="icon">🏹</div>
+                        <h2>ARJUN</h2>
+                        <p>AI Sales & Client Intelligence Agent</p>
+                    </div>
+                </div>
+                <div class="creative-info">
+                    <h3>📱 Instagram/FB Post - Square</h3>
+                    <p>Perfect for feed posts. 1080x1080px recommended</p>
+                    <span class="social-badge"><i class="fab fa-instagram"></i> Instagram</span>
+                    <span class="social-badge"><i class="fab fa-facebook"></i> Facebook</span>
+                </div>
+            </div>
+            
+            <!-- Creative 2: Features Story -->
+            <div class="creative-card">
+                <div class="creative-preview">
+                    <div class="creative-2">
+                        <h2>🏹 ARJUN AI</h2>
+                        <p style="font-size: 14px; color: var(--text-muted);">Your 24/7 Sales Team</p>
+                        <div class="feature"><i class="fas fa-check-circle"></i> Instant Response</div>
+                        <div class="feature"><i class="fas fa-check-circle"></i> Auto Follow-up</div>
+                        <div class="feature"><i class="fas fa-check-circle"></i> Daily Reports</div>
+                        <div class="feature"><i class="fas fa-check-circle"></i> Client Retention</div>
+                        <p style="margin-top: 24px; font-size: 16px; font-weight: 600;">"Understand first. Solve fast. Convert smart."</p>
+                    </div>
+                </div>
+                <div class="creative-info">
+                    <h3>📱 Instagram/FB Story</h3>
+                    <p>9:16 aspect ratio for stories. 1080x1920px</p>
+                    <span class="social-badge"><i class="fab fa-instagram"></i> Story</span>
+                </div>
+            </div>
+            
+            <!-- Creative 3: Comparison -->
+            <div class="creative-card">
+                <div class="creative-preview">
+                    <div class="creative-3">
+                        <h2>⚖️ Before vs After</h2>
+                        <div class="compare-row">
+                            <span>Response Time</span>
+                            <span class="bad">Delayed</span>
+                            <span class="good">⚡ Instant</span>
+                        </div>
+                        <div class="compare-row">
+                            <span>Leads Lost</span>
+                            <span class="bad">80%</span>
+                            <span class="good">0%</span>
+                        </div>
+                        <div class="compare-row">
+                            <span>Conversion</span>
+                            <span class="bad">Low</span>
+                            <span class="good">2-5x</span>
+                        </div>
+                        <div class="compare-row">
+                            <span>Reporting</span>
+                            <span class="bad">Manual</span>
+                            <span class="good">Auto</span>
+                        </div>
+                        <div class="compare-row">
+                            <span>Availability</span>
+                            <span class="bad">9-6</span>
+                            <span class="good">24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="creative-info">
+                    <h3>📊 Comparison Post - Square</h3>
+                    <p>High-contrast comparison to highlight value</p>
+                    <span class="social-badge"><i class="fab fa-linkedin"></i> LinkedIn</span>
+                    <span class="social-badge"><i class="fab fa-facebook"></i> Facebook</span>
+                </div>
+            </div>
+            
+            <!-- Creative 4: Stats -->
+            <div class="creative-card">
+                <div class="creative-preview">
+                    <div class="creative-4">
+                        <h2>🚀 ARJUN Results</h2>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <h3>2-5x</h3>
+                                <p>More Conversions</p>
+                            </div>
+                            <div class="stat">
+                                <h3>70%</h3>
+                                <p>Cost Savings</p>
+                            </div>
+                            <div class="stat">
+                                <h3>0%</h3>
+                                <p>Missed Leads</p>
+                            </div>
+                            <div class="stat">
+                                <h3>24/7</h3>
+                                <p>Active Selling</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="creative-info">
+                    <h3>📈 Stats Post - Square</h3>
+                    <p>Bold numbers to showcase results</p>
+                    <span class="social-badge"><i class="fab fa-linkedin"></i> LinkedIn</span>
+                    <span class="social-badge"><i class="fab fa-instagram"></i> Instagram</span>
+                </div>
+            </div>
+            
+            <!-- Creative 5: Quote -->
+            <div class="creative-card">
+                <div class="creative-preview">
+                    <div class="creative-5">
+                        <p>ARJUN is not a software — it is your AI Sales Team that works 24x7 to generate, convert, and retain customers.</p>
+                        <div class="author">— ALGO IQ</div>
+                    </div>
+                </div>
+                <div class="creative-info">
+                    <h3>💬 Quote Post - Square</h3>
+                    <p>Inspirational quote for engagement</p>
+                    <span class="social-badge"><i class="fab fa-instagram"></i> Instagram</span>
+                    <span class="social-badge"><i class="fab fa-linkedin"></i> LinkedIn</span>
+                </div>
+            </div>
+            
+            <!-- Creative 6: CTA Story -->
+            <div class="creative-card">
+                <div class="creative-preview">
+                    <div class="creative-6">
+                        <h2>🚀 Ready to 3x Your Sales?</h2>
+                        <p>Let ARJUN handle your sales while you focus on growth</p>
+                        <div class="cta-btn">
+                            <i class="fab fa-whatsapp"></i> Chat Now
+                        </div>
+                        <p style="margin-top: 24px; font-size: 12px; opacity: 0.7;">#AISales #BusinessGrowth #ALGOIQ</p>
+                    </div>
+                </div>
+                <div class="creative-info">
+                    <h3>🎯 CTA Story - Vertical</h3>
+                    <p>High conversion story with WhatsApp CTA</p>
+                    <span class="social-badge"><i class="fab fa-instagram"></i> Story</span>
+                    <span class="social-badge"><i class="fab fa-whatsapp"></i> WhatsApp Status</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

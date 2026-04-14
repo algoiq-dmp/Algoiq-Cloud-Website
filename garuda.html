@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GARUDA - Action AI | ALGO IQ - Your AI Task Executor</title>
+    <meta name="description" content="GARUDA - Action AI. Your AI Task Executor that executes tasks, follows up, ensures completion. Jo kaam sirf plan nahi karta, complete bhi karwata hai.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #00b894;
+            --primary-light: #55efc4;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --accent: #00b894;
+            --accent-light: #55efc4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255,255,255,0.06);
+            --gradient-primary: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: #00cec9; bottom: -150px; right: -150px; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366, #20b356);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0%, 100% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 10px 50px rgba(37, 211, 102, 0.6); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(3, 3, 8, 0.9);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text { color: var(--text); }
+        .logo span { color: var(--accent-light); }
+
+        nav { display: flex; gap: 36px; align-items: center; }
+        nav a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s; }
+        nav a:hover { color: var(--text); }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 184, 148, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(0, 184, 148, 0.5); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border: 1px solid var(--border-light);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 140px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 184, 148, 0.2), transparent 60%);
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(0, 184, 148, 0.1);
+            border: 1px solid rgba(0, 184, 148, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--accent-light);
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 5.5vw, 62px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            max-width: 540px;
+        }
+
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+        .hero-buttons .btn { padding: 16px 32px; font-size: 16px; }
+
+        /* Section Headers */
+        .section-header { text-align: center; margin-bottom: 56px; position: relative; z-index: 1; }
+        .section-header h2 { font-size: 42px; font-weight: 700; margin-bottom: 16px; }
+        .section-header p { color: var(--text-muted); font-size: 17px; max-width: 600px; margin: 0 auto; }
+
+        /* Core Problem */
+        .core-problem { padding: 100px 0; position: relative; z-index: 1; }
+
+        .problem-table {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .problem-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .problem-row:last-child { border-bottom: none; }
+
+        .problem-col { padding: 24px 28px; }
+        .problem-col.problem { background: rgba(245, 158, 11, 0.08); }
+        .problem-col.solution { background: rgba(0, 184, 148, 0.08); }
+
+        .col-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .problem .col-label { color: var(--warning); }
+        .solution .col-label { color: var(--accent); }
+
+        .problem-row h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .problem-row p { font-size: 14px; color: var(--text-muted); }
+
+        /* Benefits */
+        .benefits { padding: 100px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .benefit-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+        .benefit-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .benefit-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        .benefit-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* Metrics */
+        .metrics { padding: 80px 0; position: relative; z-index: 1; }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 24px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .metric-number {
+            font-size: 38px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metric-card p { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+
+        /* Comparison */
+        .comparison { padding: 100px 0; position: relative; z-index: 1; }
+
+        .comp-table {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .comp-header {
+            display: grid;
+            grid-template-columns: 180px 1fr 1fr;
+            background: var(--secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-header > div { padding: 20px 24px; font-weight: 600; font-size: 14px; }
+        .comp-header .activity { color: var(--text-muted); }
+        .comp-header .manual { color: var(--warning); }
+        .comp-header .garuda { color: var(--accent); }
+
+        .comp-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comp-row:last-child { border-bottom: none; }
+
+        .comp-cell { padding: 18px 24px; font-size: 14px; }
+        .comp-cell.activity { color: var(--text-muted); font-weight: 500; }
+        .comp-cell.manual { background: rgba(245, 158, 11, 0.05); }
+        .comp-cell.garuda { background: rgba(0, 184, 148, 0.05); }
+
+        /* Combo */
+        .combo { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .combo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .combo-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .combo-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+        .combo-card p { font-size: 15px; color: var(--text-muted); }
+
+        .combo-card:first-child { border-color: rgba(225, 112, 85, 0.4); }
+        .combo-card:last-child { border-color: rgba(0, 184, 148, 0.4); }
+
+        .combo-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--accent);
+        }
+
+        /* Test Cases */
+        .testcases { padding: 100px 0; position: relative; z-index: 1; }
+
+        .testcase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .testcase-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .testcase-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .testcase-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .testcase-header h3 { font-size: 20px; font-weight: 600; }
+
+        .testcase-flow {
+            margin-bottom: 16px;
+        }
+
+        .testcase-flow h4 { font-size: 14px; color: var(--warning); margin-bottom: 10px; font-weight: 600; }
+
+        .testcase-flow ol { padding-left: 20px; }
+        .testcase-flow li { padding: 6px 0; font-size: 14px; color: var(--text-muted); }
+
+        .testcase-result {
+            background: rgba(0, 184, 148, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ROI */
+        .roi-section { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+
+        .roi-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .roi-card h3 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+        .roi-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* Positioning */
+        .positioning { padding: 80px 0; position: relative; z-index: 1; text-align: center; }
+
+        .position-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .position-card p {
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .position-card p:last-child {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 184, 148, 0.2), transparent 60%);
+        }
+
+        .cta-section h2 { font-size: 42px; font-weight: 700; margin-bottom: 16px; }
+        .cta-section p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        footer {
+            padding: 50px 0 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: var(--secondary);
+        }
+
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero { padding: 120px 0 60px; }
+            .benefit-grid { grid-template-columns: 1fr 1fr; }
+            .metrics-grid { grid-template-columns: 1fr 1fr 1fr; }
+            .comp-header, .comp-row { grid-template-columns: 1fr; }
+            .combo-grid { grid-template-columns: 1fr; }
+            .combo-arrow { display: none; }
+            .testcase-grid { grid-template-columns: 1fr; }
+            .roi-grid { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span class="logo-text">ALGO <span>IQ</span></span>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="profitability.html">ROI</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="demo.html">Demo</a>
+                <a href="deployment.html">Deployment</a>
+            </nav>
+            <a href="https://wa.me/919999999999" class="btn btn-primary">
+                <i class="fab fa-whatsapp"></i> Chat Now
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i> Action AI
+                </div>
+                <h1>GARUDA<br><span class="highlight">Action AI</span></h1>
+                <p class="hero-subtitle">"Jo kaam sirf plan nahi karta, complete bhi karwata hai"<br><br>Your AI Task Executor – executes tasks, follows up, ensures completion. Planning ke saath execution bhi pakka karta hai.</p>
+                <div class="hero-buttons">
+                    <a href="https://wa.me/919999999999" class="btn btn-primary">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Demo
+                    </a>
+                    <a href="#testcases" class="btn btn-secondary">
+                        <i class="fas fa-play"></i> See Test Cases
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="core-problem">
+        <div class="container">
+            <div class="section-header">
+                <h2>Core Problem vs GARUDA Solution</h2>
+                <p>Traditional office vs AI-powered execution</p>
+            </div>
+            <div class="problem-table">
+                <div class="problem-row">
+                    <div class="problem-col problem">
+                        <div class="col-label">Traditional Office</div>
+                        <h4>Tasks assign hote hain but complete nahi hote</h4>
+                        <p>No tracking, no verification, work gets lost</p>
+                    </div>
+                    <div class="problem-col solution">
+                        <div class="col-label">With GARUDA AI</div>
+                        <h4>95%+ Task Completion with Tracking</h4>
+                        <p>Every task tracked, followed up, verified</p>
+                    </div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-col problem">
+                        <div class="col-label">Traditional</div>
+                        <h4>Follow-ups Manual & Inconsistent</h4>
+                        <p>Depends on memory, easily forgotten</p>
+                    </div>
+                    <div class="problem-col solution">
+                        <div class="col-label">With GARUDA</div>
+                        <h4>Automated Smart Follow-ups</h4>
+                        <p>Systematic reminders till completion</p>
+                    </div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-col problem">
+                        <div class="col-label">Traditional</div>
+                        <h4>Important Deadlines Miss Ho Jate Hain</h4>
+                        <p>GST, IT, compliance - all at risk</p>
+                    </div>
+                    <div class="problem-col solution">
+                        <div class="col-label">With GARUDA</div>
+                        <h4>Zero Missed Deadlines</h4>
+                        <p>Alerts + escalation system</p>
+                    </div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-col problem">
+                        <div class="col-label">Traditional</div>
+                        <h4>Team Coordination Weak</h4>
+                        <p>Confusion, scattered communication</p>
+                    </div>
+                    <div class="problem-col solution">
+                        <div class="col-label">With GARUDA</div>
+                        <h4>Centralized Task Command</h4>
+                        <p>One system for all execution</p>
+                    </div>
+                </div>
+                <div class="problem-row">
+                    <div class="problem-col problem">
+                        <div class="col-label">Traditional</div>
+                        <h4>Owner Ko Sab Yaad Rakhna Padta Hai</h4>
+                        <p>Firefighting mode, always stressed</p>
+                    </div>
+                    <div class="problem-col solution">
+                        <div class="col-label">With GARUDA</div>
+                        <h4>AI Remembers Everything</h4>
+                        <p>Owner becomes stress-free operator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Client Actually Gets</h2>
+                <p>Real benefits that impact your business</p>
+            </div>
+            <div class="benefit-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Time Saving</h3>
+                    <p>3-4 hours/day saved with automated follow-ups and tracking</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-rupee-sign"></i></div>
+                    <h3>Money Saving</h3>
+                    <p>₹30K - ₹2L/month savings (operations manager salary + penalties)</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Reputation Gain</h3>
+                    <p>Professional image with organized compliance and payments</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Stress Reduction</h3>
+                    <p>No more "Ye kaam hua kya?" - everything tracked</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="metrics">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">3-4</div>
+                    <p>Hours/Day Saved</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">₹30K</div>
+                    <p>- ₹2L/Month</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">95%</div>
+                    <p>Task Completion</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">80%</div>
+                    <p>Less Follow-up</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">10x</div>
+                    <p>Efficiency</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">0</div>
+                    <p>Missed Deadlines</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="comparison">
+        <div class="container">
+            <div class="section-header">
+                <h2>GARUDA vs Manual System</h2>
+                <p>Detailed comparison of activities</p>
+            </div>
+            <div class="comp-table">
+                <div class="comp-header">
+                    <div class="activity">Activity</div>
+                    <div class="manual">Manual Tarika</div>
+                    <div class="garuda">GARUDA AI</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">Daily Task Review</div>
+                    <div class="comp-cell manual">WhatsApp / verbal / scattered</div>
+                    <div class="comp-cell garuda">Structured auto review</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">Reminder System</div>
+                    <div class="comp-cell manual">Bhool jate hain</div>
+                    <div class="comp-cell garuda">Auto reminders till completion</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">To-Do List</div>
+                    <div class="comp-cell manual">Manual notes</div>
+                    <div class="comp-cell garuda">AI priority matrix</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">GST / IT Compliance</div>
+                    <div class="comp-cell manual">Last moment rush</div>
+                    <div class="comp-cell garuda">Pre-scheduled alerts</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">CA Coordination</div>
+                    <div class="comp-cell manual">Email chaos</div>
+                    <div class="comp-cell garuda">Auto data + reminders</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">Payment Follow-ups</div>
+                    <div class="comp-cell manual">Irregular</div>
+                    <div class="comp-cell garuda">Systematic repeat</div>
+                </div>
+                <div class="comp-row">
+                    <div class="comp-cell activity">Data Tracking</div>
+                    <div class="comp-cell manual">Scattered files</div>
+                    <div class="comp-cell garuda">Centralized dashboard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="combo">
+        <div class="container">
+            <div class="section-header">
+                <h2>GARUDA + CHITRAGUPTA Power Combo</h2>
+                <p>The ultimate finance & execution team</p>
+            </div>
+            <div class="combo-grid">
+                <div class="combo-card">
+                    <h3>🧾 CHITRAGUPTA</h3>
+                    <p>Accounts AI - Maintains data, tracks bills, prepares reports</p>
+                    <p style="font-weight: 600; margin-top: 12px; color: var(--accent-light);">= Brain (Accounts)</p>
+                </div>
+                <div class="combo-arrow">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="combo-card">
+                    <h3>🦅 GARUDA</h3>
+                    <p>Action AI - Executes tasks, follows up, ensures completion</p>
+                    <p style="font-weight: 600; margin-top: 12px; color: var(--accent-light);">= Action (Execution)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testcases" id="testcases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real-Life Test Cases</h2>
+                <p>Practical scenarios where GARUDA delivers results</p>
+            </div>
+            <div class="testcase-grid">
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <div class="testcase-icon"><i class="fas fa-file-invoice"></i></div>
+                        <h3>GST Filing</h3>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Without GARUDA:</h4>
+                        <ol>
+                            <li>Staff forgets data collection</li>
+                            <li>CA keeps asking documents</li>
+                            <li>Last day rush, penalty risk</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>With GARUDA:</h4>
+                        <ol>
+                            <li>7 days before → reminder to accounts</li>
+                            <li>CHITRAGUPTA prepares data</li>
+                            <li>GARUDA sends to CA automatically</li>
+                            <li>Follow-up automated, tracking confirmed</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-result">✅ Zero delay, no penalty, no stress</div>
+                </div>
+
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <div class="testcase-icon"><i class="fas fa-rupee-sign"></i></div>
+                        <h3>Payment Collection</h3>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Without GARUDA:</h4>
+                        <ol>
+                            <li>"Call kar dena client ko"</li>
+                            <li>Follow-up inconsistent</li>
+                            <li>Payment delay, cash flow issue</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>With GARUDA:</h4>
+                        <ol>
+                            <li>Due date auto-detected</li>
+                            <li>WhatsApp reminder sent</li>
+                            <li>Follow-up every 2 days</li>
+                            <li>Escalation if unpaid</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-result">✅ Faster collections, better cash flow</div>
+                </div>
+
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <div class="testcase-icon"><i class="fas fa-users"></i></div>
+                        <h3>Daily Staff Work</h3>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Without GARUDA:</h4>
+                        <ol>
+                            <li>"Aaj kya kiya?"</li>
+                            <li>No tracking, no accountability</li>
+                            <li>Low productivity</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>With GARUDA:</h4>
+                        <ol>
+                            <li>Daily task assigned</li>
+                            <li>Auto review at end of day</li>
+                            <li>Pending tasks tracked</li>
+                            <li>Performance report generated</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-result">✅ High productivity, clear accountability</div>
+                </div>
+
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <div class="testcase-icon"><i class="fas fa-calculator"></i></div>
+                        <h3>CA Coordination</h3>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Without GARUDA:</h4>
+                        <ol>
+                            <li>Emails miss ho jate hain</li>
+                            <li>Documents incomplete</li>
+                            <li>Confusion, delays</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>With GARUDA:</h4>
+                        <ol>
+                            <li>Data prepared via CHITRAGUPTA</li>
+                            <li>GARUDA sends structured data</li>
+                            <li>Reminder to CA</li>
+                            <li>Status tracked throughout</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-result">✅ Smooth compliance, professional system</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="roi-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>ROI Summary</h2>
+                <p>Measurable impact on your business</p>
+            </div>
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <h3>3-4 hrs/day</h3>
+                    <p>Time Saved</p>
+                </div>
+                <div class="roi-card">
+                    <h3>₹30K - ₹2L</h3>
+                    <p>Cost Saved/Month</p>
+                </div>
+                <div class="roi-card">
+                    <h3>95%+</h3>
+                    <p>Task Completion</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="positioning">
+        <div class="container">
+            <div class="position-card">
+                <p>"Aapka business mein planning already hoti hai… GARUDA ensure karta hai ki har kaam complete bhi ho."</p>
+                <p>"Agar CHITRAGUPTA aapka accountant hai… toh GARUDA aapka execution manager hai."</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Never Miss a Task Again</h2>
+            <p>Get GARUDA – Your AI Task Executor. Your business deserves perfect execution.</p>
+            <div class="cta-buttons">
+                <a href="book-demo.html" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Book Free Demo
+                </a>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ALGO IQ. All rights reserved. | <a href="index.html">Back to Home</a></p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>

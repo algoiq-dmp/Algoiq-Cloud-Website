@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARJUN - Sales AI | ALGO IQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #030308;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --card-hover: #151528;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --success: #10b981;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #f59e0b, #d97706 100%);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -200px; }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(3, 3, 8, 0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo span { color: var(--text); }
+
+        nav { display: flex; gap: 32px; }
+        nav a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; transition: color 0.3s; }
+        nav a:hover { color: var(--text); }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: #000;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 100px;
+            background: radial-gradient(ellipse 80% 50% at 20% -10%, rgba(245, 158, 11, 0.2), transparent),
+                        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(217, 119, 6, 0.15), transparent),
+                        var(--primary);
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .hero-content { position: relative; z-index: 1; max-width: 700px; }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--accent-light);
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 58px);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero > .container { display: flex; gap: 60px; align-items: center; min-height: 80vh; }
+        .hero-text { flex: 1; position: relative; z-index: 1; }
+        .hero-image { flex: 1; position: relative; display: flex; justify-content: center; }
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .hero p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; max-width: 550px; }
+        .hero-subtitle { font-size: 18px; color: var(--text-muted); margin-bottom: 16px; max-width: 600px; line-height: 1.7; }
+        .hero-subtitle-hindi {
+            font-size: 18px;
+            color: var(--accent-light);
+            margin-bottom: 32px;
+            max-width: 600px;
+            line-height: 1.7;
+            font-weight: 500;
+            padding: 16px 20px;
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+        }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-cta { padding: 16px 32px; font-size: 16px; }
+        
+        .hindi-tagline {
+            font-size: 20px;
+            color: #ff9933;
+            margin-bottom: 16px;
+            font-weight: 700;
+            animation: glow-text 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow-text {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 153, 51, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 153, 51, 0.6); }
+        }
+        
+        .hero > .container { display: flex; gap: 60px; align-items: center; min-height: 80vh; }
+        .hero-text { flex: 1; }
+        .hero-image { flex: 1; position: relative; display: flex; justify-content: center; }
+        .hero-image-wrapper {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .hero-image-wrapper img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            transition: transform 0.5s ease;
+        }
+        .hero-image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+        .hero-image-glow {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(245, 158, 11, 0.2) 100%);
+            border-radius: 24px;
+            pointer-events: none;
+        }
+        .floating-card {
+            position: absolute;
+            background: rgba(14, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        .floating-card i { font-size: 24px; color: var(--success); }
+        .floating-card span { font-weight: 600; font-size: 14px; }
+        .card-1 { top: 20%; left: -20px; animation-delay: 0s; }
+        .card-2 { bottom: 20%; right: -20px; animation-delay: 1.5s; }
+        .card-2 i { color: var(--accent); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+        .stat-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(245, 158, 11, 0.08);
+            border-radius: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 2px 2px, rgba(245, 158, 11, 0.15) 1px, transparent 0);
+            background-size: 40px 40px;
+            animation: particles 20s linear infinite;
+        }
+        
+        @keyframes particles {
+            from { background-position: 0 0; }
+            to { background-position: 40px 40px; }
+        }
+
+        /* Section */
+        .section { padding: 100px 0; position: relative; z-index: 1; }
+        .section.alt { background: var(--secondary); }
+
+        .section-title { font-size: 38px; font-weight: 700; text-align: center; margin-bottom: 16px; }
+        .section-subtitle { font-size: 17px; color: var(--text-muted); text-align: center; max-width: 600px; margin: 0 auto 48px; }
+
+        /* Stats Banner */
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .stats-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stats-card i { font-size: 40px; color: var(--accent); margin-bottom: 16px; }
+        .stats-card h3 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+        .stats-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* Problem Grid */
+        .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+        .problem-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .problem-card.danger { border-color: rgba(239, 68, 68, 0.3); }
+
+        .problem-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .problem-icon i { font-size: 24px; color: #ef4444; }
+        .problem-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        .problem-card p { font-size: 14px; color: var(--text-muted); }
+        
+        .section-header-hindi {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .hindi-eyebrow {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .hindi-translation {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(245, 158, 11, 0.2);
+            font-size: 14px;
+            color: var(--accent-light);
+            font-weight: 500;
+            font-style: italic;
+        }
+        
+        .cta-hindi {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .cta-hindi span {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.15));
+            border: 2px solid var(--accent);
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            animation: pulse-cta 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-cta {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 0 20px 10px rgba(245, 158, 11, 0); }
+        }
+        
+        .section.cta-section {
+            background: linear-gradient(180deg, var(--primary) 0%, rgba(245, 158, 11, 0.05) 50%, var(--primary) 100%);
+        }
+
+        /* Feature Grid */
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i { font-size: 24px; color: var(--accent); }
+        .feature-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+        .feature-card p { font-size: 13px; color: var(--text-muted); }
+
+        /* Demo Section */
+        .demo-container { max-width: 700px; margin: 0 auto; }
+
+        .chat-window {
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(90deg, #25D366, #20b356);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header i { font-size: 20px; }
+        .chat-header h4 { font-size: 15px; font-weight: 600; color: white; }
+
+        .chat-messages { padding: 24px; min-height: 280px; }
+
+        .message { margin-bottom: 16px; animation: fadeIn 0.4s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .message.user { text-align: right; }
+
+        .message-bubble {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 14px;
+        }
+
+        .message.user .message-bubble { background: var(--accent); color: #000; border-bottom-right-radius: 4px; }
+        .message.ai .message-bubble { background: var(--card-hover); border-bottom-left-radius: 4px; }
+
+        /* Results */
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
+        .result-card { padding: 40px; }
+        .result-number { font-size: 56px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .result-label { font-size: 16px; color: var(--text-muted); }
+
+        /* Use Cases */
+        .use-cases-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+        .use-case-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .use-case-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+        .use-case-card i { font-size: 36px; color: var(--accent); margin-bottom: 16px; }
+        .use-case-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .use-case-card p { font-size: 12px; color: var(--text-muted); }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-box {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .pricing-box h3 { font-size: 20px; margin-bottom: 16px; text-align: center; }
+        .pricing-box .price {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--success);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .pricing-box .price span { font-size: 16px; color: var(--text-muted); font-weight: 400; }
+        .pricing-box .setup { font-size: 14px; color: var(--text-dim); text-align: center; margin-bottom: 24px; }
+        .pricing-box ul { list-style: none; text-align: left; margin-bottom: 24px; }
+        .pricing-box li { padding: 10px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        .pricing-box li:last-child { border-bottom: none; }
+        .pricing-box li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--success); }
+
+        .cta-section h2 { font-size: 42px; font-weight: 700; margin-bottom: 16px; }
+        .cta-section p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+
+        footer { padding: 60px 0 30px; border-top: 1px solid var(--border); text-align: center; position: relative; z-index: 1; }
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 1024px) {
+            .hero-image { display: none; }
+            .stats-banner { grid-template-columns: repeat(2, 1fr); }
+            .problem-grid { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 32px; }
+            .hero-subtitle-hindi { font-size: 16px; }
+            .hindi-tagline { font-size: 18px; }
+            .hero-stats { flex-wrap: wrap; justify-content: center; }
+            .hero-stats .stat-badge { flex: 1; min-width: 100px; }
+            .floating-card { display: none; }
+            .stats-banner { grid-template-columns: 1fr; }
+            .results-grid { grid-template-columns: 1fr; }
+            .use-cases-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span>ALGO IQ</span>
+            </a>
+            <nav>
+                <a href="index.html" style="color: var(--text);"><i class="fas fa-home"></i> Home</a>
+                <a href="arjun.html">ARJUN</a>
+                <a href="garuda.html">GARUDA</a>
+                <a href="chitragupta.html">CHITRAGUPTA</a>
+                <a href="sanjay.html">SANJAY</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <a href="index.html" class="btn btn-secondary">← All Agents</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-particles"></div>
+        <div class="container">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <i class="fas fa-crosshairs"></i>
+                    AI Sales & Client Intelligence Agent
+                    <span style="margin-left: 12px; padding: 4px 12px; background: linear-gradient(135deg, #ff9933, #ff6600); border-radius: 20px; font-size: 11px; font-weight: 600;">
+                        🇮🇳 Made in India
+                    </span>
+                </div>
+                <div class="hindi-tagline">
+                    🇮🇳 भारत का AI | हर लीड को सेल में बदलें
+                </div>
+                <h1>🏹 ARJUN – AI Sales & Client Intelligence</h1>
+                <p class="hero-subtitle">From first inquiry to repeat business — ARJUN handles everything automatically. Understands needs, delivers solutions instantly, monitors performance daily, and builds long-term client relationships.</p>
+                <p class="hero-subtitle-hindi">
+                    हर इनक्वायरी से लेकर रिपीट बिजनेस तक — ARJUN सब कुछ ऑटोमैटिक हैंडल करता है। जरूरतें समझता है, तुरंत सॉल्यूशन देता है, और लॉन्ग-टर्म क्लाइंट रिलेशनशिप बनाता है।
+                </p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary hero-cta">
+                        <i class="fas fa-rocket"></i> See How It Works
+                    </a>
+                    <a href="#demo" class="btn btn-secondary hero-cta">
+                        <i class="fab fa-whatsapp"></i> Try Live Demo
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-badge">
+                        <span class="stat-number">2-5x</span>
+                        <span class="stat-label">More Sales</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Active</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-number">70%</span>
+                        <span class="stat-label">Cost Save</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?w=600&h=500&fit=crop" alt="AI Sales Agent">
+                    <div class="hero-image-glow"></div>
+                </div>
+                <div class="floating-card card-1">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Lead Converted!</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>₹2.5L Revenue</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section alt">
+        <div class="container">
+            <div class="section-header-hindi">
+                <span class="hindi-eyebrow">🔴 Sales Problems | बिक्री की समस्याएं</span>
+            </div>
+            <h2 class="section-title">Sales Problem? You're Not Alone</h2>
+            <p class="section-subtitle">Every business faces these challenges. See how Arjun solves them.</p>
+            
+            <div class="problem-grid">
+                <div class="problem-card danger">
+                    <div class="problem-icon"><i class="fas fa-trash-alt"></i></div>
+                    <h3>Leads Go Waste</h3>
+                    <p>80% of leads are lost because of delayed response. Potential customers move to competitors.</p>
+                    <div class="hindi-translation">लीड्स बर्बाद होती हैं — देरी से जवाब देने की वजह से।</div>
+                </div>
+                <div class="problem-card danger">
+                    <div class="problem-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Follow-up Missed</h3>
+                    <p>Your team is busy or after working hours. The lead moves to your competitor.</p>
+                    <div class="hindi-translation">फॉलो-अपmissed होता है — टीम busy या off-duty होती है।</div>
+                </div>
+                <div class="problem-card danger">
+                    <div class="problem-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Inconsistent Results</h3>
+                    <p>Sales depend on individual performance. No reliability, no predictability.</p>
+                    <div class="hindi-translation">Results अलग-अलग रहते हैं — कोई consistency नहीं।</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">What Arjun Can Do For You</h2>
+            <p class="section-subtitle">12 powerful capabilities to boost your sales</p>
+            
+            <div class="stats-banner">
+                <div class="stats-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>2-5x</h3>
+                    <p>More Conversions</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>0%</h3>
+                    <p>Missed Leads</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>24/7</h3>
+                    <p>Active Selling</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-indian-rupee-sign"></i>
+                    <h3>70%</h3>
+                    <p>Cost Reduction</p>
+                </div>
+            </div>
+
+            <div class="feature-grid" id="features">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-search"></i></div>
+                    <h3>Need Analysis Engine</h3>
+                    <p>Identifies client requirements, pain points, and intent. Classifies leads into Hot/Warm/Cold.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Solution Provider</h3>
+                    <p>Recommends personalized products/services with instant quotations and demo plans.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fab fa-whatsapp"></i></div>
+                    <h3>WhatsApp Automation</h3>
+                    <p>Instant response system via WhatsApp - never miss a lead again.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-phone"></i></div>
+                    <h3>Auto Follow-up</h3>
+                    <p>Automated follow-ups - no lead goes cold, every opportunity is captured.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>Daily Monitoring & Reporting</h3>
+                    <p>Tracks leads, follow-ups, demo status, conversions. Generates daily reports automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>Client Relationship (PR)</h3>
+                    <p>Maintains continuous touch with existing clients. Sends updates, offers, product improvements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-database"></i></div>
+                    <h3>Real-Time Data Provider</h3>
+                    <p>Fetches product data, reports, performance metrics in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-sync"></i></div>
+                    <h3>Data Auto-Updation</h3>
+                    <p>Identifies missing data, auto-fills contact details, usage data, activity logs daily.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3>Appointment Booking</h3>
+                    <p>Auto-schedule demos & meetings seamlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">⚖️ Without vs With ARJUN</h2>
+            <p class="section-subtitle">See the difference AI makes in your sales</p>
+            
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 16px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: rgba(245, 158, 11, 0.1);">
+                            <th style="padding: 20px; text-align: left; font-size: 16px; color: var(--text-muted);">Area</th>
+                            <th style="padding: 20px; text-align: center; font-size: 16px; color: #ef4444;">❌ Without ARJUN</th>
+                            <th style="padding: 20px; text-align: center; font-size: 16px; color: var(--success);">🏹 With ARJUN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Response Time</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Delayed / Missed replies</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">⚡ Instant replies</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Lead Management</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Unorganized</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">📊 Structured CRM</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Follow-ups</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Manual & inconsistent</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">🔁 Automated & timely</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Conversion Rate</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Low / unpredictable</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">🎯 High & optimized</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Data Availability</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Scattered / incomplete</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">📡 One-touch access</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Reporting</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Manual effort</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">📈 Auto daily reports</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Client Retention</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Weak follow-up</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">🤝 Strong PR & engagement</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 16px 20px; font-weight: 500;">Marketing</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Irregular posting</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">📲 Daily auto-content</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 16px 20px; font-weight: 500;">Efficiency</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--text-muted);">Time-consuming</td>
+                            <td style="padding: 16px 20px; text-align: center; color: var(--success); font-weight: 600;">🚀 Fully automated</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="section alt" id="demo">
+        <div class="container">
+            <h2 class="section-title">Try Arjun Live</h2>
+            <p class="section-subtitle">See how Arjun converts leads automatically</p>
+            
+            <div class="demo-container">
+                <div class="chat-window">
+                    <div class="chat-header">
+                        <i class="fab fa-whatsapp"></i>
+                        <h4>Arjun - Sales AI</h4>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message ai">
+                            <div class="message-bubble">
+                                Namaste! 🙏<br>Welcome to our company!<br>How can I help you today?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">I want to know about your courses</div>
+                        </div>
+                        <div class="message ai" style="animation-delay: 0.5s;">
+                            <div class="message-bubble">
+                                Great question! 🎯<br><br>Are you looking for courses as a beginner or do you have some experience?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">I'm a beginner</div>
+                        </div>
+                        <div class="message ai" style="animation-delay: 1s;">
+                            <div class="message-bubble">
+                                Perfect! Our <strong>Complete Masterclass</strong> is ideal for beginners.<br><br>📚 Includes:<br>• Video Lessons<br>• Live Q&A<br>• 1-on-1 Mentorship<br><br>Would you like to <strong>schedule a free demo call</strong>?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 24px;">
+                    <a href="https://wa.me/919999999999" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-whatsapp"></i> Try on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Results Across Industries</h2>
+            <p class="section-subtitle">Real results from real businesses</p>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-number">3x</div>
+                    <div class="result-label">More Admissions (Coaching)</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">5x</div>
+                    <div class="result-label">More Bookings (Real Estate)</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">4x</div>
+                    <div class="result-label">More Appointments (Healthcare)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section alt">
+        <div class="container">
+            <h2 class="section-title">Best For These Businesses</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>Coaching</h4>
+                    <p>Course inquiries, admissions</p>
+                </div>
+                <div class="use-case-card">
+                    <i class="fas fa-home"></i>
+                    <h4>Real Estate</h4>
+                    <p>Property queries, site visits</p>
+                </div>
+                <div class="use-case-card">
+                    <i class="fas fa-stethoscope"></i>
+                    <h4>Clinics</h4>
+                    <p>Appointment booking</p>
+                </div>
+                <div class="use-case-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h4>Agencies</h4>
+                    <p>Client queries, proposals</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">📥 Download ARJUN One-Pager</h2>
+            <p class="section-subtitle">Get the complete ARJUN AI agent details in a shareable PDF format</p>
+            
+            <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 32px;">
+                <a href="#" onclick="alert('PDF Download: Coming Soon! Contact us on WhatsApp to get the one-pager.'); return false;" class="btn btn-primary" style="padding: 20px 40px; font-size: 16px;">
+                    <i class="fas fa-file-pdf"></i> Download One-Pager (PDF)
+                </a>
+                <a href="https://wa.me/919999999999?text=Hi%2C%20I%20want%20to%20download%20the%20ARJUN%20AI%20One-Pager" target="_blank" class="btn btn-secondary" style="padding: 20px 40px; font-size: 16px;">
+                    <i class="fab fa-whatsapp"></i> Get One-Pager on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="pricing-box">
+                <h3>🚀 ARJUN - Sales AI Pricing</h3>
+                <div class="price">₹30,000-60,000<span>/month</span></div>
+                <div class="setup">One-time setup: ₹50,000+</div>
+                <ul>
+                    <li>Lead capture & qualification</li>
+                    <li>WhatsApp automation</li>
+                    <li>Auto follow-up sequences</li>
+                    <li>CRM integration</li>
+                    <li>Appointment booking</li>
+                    <li>Hindi + English + Gujarati</li>
+                </ul>
+            </div>
+            <div class="cta-hindi">
+                <span>🚀 अपनी बिक्री को 3x करें!</span>
+            </div>
+            <h2>Ready to 3x Your Sales?</h2>
+            <p>Join 500+ businesses already using ARJUN to convert more leads</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="need-analysis.html" class="btn btn-primary hero-cta">
+                    <i class="fas fa-rocket"></i> Book Free Demo
+                </a>
+                <a href="https://wa.me/919999999999" target="_blank" class="btn btn-secondary hero-cta">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 60px 0; background: var(--secondary); position: relative; z-index: 1;">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 32px; margin-bottom: 32px;">Meet Other AI Agents</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <a href="arjun.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🏹 <strong>ARJUN</strong><br><span style="font-size: 13px; color: var(--text-muted);">Sales AI</span></a>
+                <a href="vachan.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📢 <strong>VACHAN</strong><br><span style="font-size: 13px; color: var(--text-muted);">Marketing AI</span></a>
+                <a href="drishti.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">👁️ <strong>DRISHTI</strong><br><span style="font-size: 13px; color: var(--text-muted);">Analytics AI</span></a>
+                <a href="nakula.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🛒 <strong>NAKULA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Ecommerce AI</span></a>
+                <a href="eklavya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">💻 <strong>EKLAVYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Development AI</span></a>
+                <a href="chanakya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📊 <strong>CHANAKYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Strategy AI</span></a>
+                <a href="vidur.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">⚖️ <strong>VIDUR</strong><br><span style="font-size: 13px; color: var(--text-muted);">Legal AI</span></a>
+                <a href="garuda.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🛡️ <strong>GARUDA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Security AI</span></a>
+                <a href="chitragupta.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📋 <strong>CHITRAGUPTA</strong><br><span style="font-size: 13px; color: var(--text-muted);">HR AI</span></a>
+                <a href="sanjay.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🗺️ <strong>SANJAY</strong><br><span style="font-size: 13px; color: var(--text-muted);">Operations AI</span></a>
+                <a href="rakshak.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🔒 <strong>RAKSHAK</strong><br><span style="font-size: 13px; color: var(--text-muted);">Cyber AI</span></a>
+                <a href="krishna.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">💡 <strong>KRISHNA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Innovation AI</span></a>
+                <a href="surya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">☀️ <strong>SURYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Energy AI</span></a>
+                <a href="kubera.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">💰 <strong>KUBERA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Finance AI</span></a>
+                <a href="dronacharya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🎓 <strong>DRONACHARYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Training AI</span></a>
+                <a href="vedvyas.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📚 <strong>VEDVYAS</strong><br><span style="font-size: 13px; color: var(--text-muted);">Knowledge AI</span></a>
+                <a href="index.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--accent); transition: all 0.3s; font-size: 24px;">→<br><span style="font-size: 13px; color: var(--text-muted);">View All Agents</span></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 ALGO IQ. All rights reserved. | <a href="index.html">Back to Home</a></p>
+            <p style="margin-top: 10px; font-weight: 600; color: #ff9933;">
+                🇮🇳 Made in India | भारत में निर्मित
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

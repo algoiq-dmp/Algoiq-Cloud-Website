@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKLAVYA - Testing AI | ALGO IQ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #030308;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --card-hover: #151528;
+            --accent: #06b6d4;
+            --accent-light: #22d3ee;
+            --success: #10b981;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #06b6d4, #0891b2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: #fde047;
+            bottom: 20%;
+            right: -50px;
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 20px); }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .lang-select {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            max-width: 500px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .section {
+            padding: 5rem 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .problems {
+            background: var(--dark);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .problem-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .problem-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .problem-card p {
+            color: var(--text-muted);
+        }
+
+        .stats {
+            background: linear-gradient(135deg, var(--secondary), var(--dark));
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-muted);
+        }
+
+        .features {
+            background: var(--darker);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(234, 179, 8, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+        }
+
+        .pricing {
+            background: var(--dark);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--secondary);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 0 40px var(--primary-glow);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-card li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pricing-card li i {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .cta {
+            background: linear-gradient(135deg, var(--primary), #facc15);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta .btn {
+            background: var(--dark);
+            color: var(--primary);
+        }
+
+        .cta .btn:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        .alert-sample {
+            background: var(--secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .alert-sample h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .alert-item {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            font-family: monospace;
+            color: #ff6b6b;
+        }
+
+        footer {
+            background: var(--dark);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding-top: 6rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                position: relative;
+                width: 100%;
+                right: auto;
+                top: auto;
+                transform: none;
+                margin-top: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 24px; max-width: 1320px; margin: 0 auto;">
+        <div class="logo" style="display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800;">
+            <div class="logo-icon" style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-bolt" style="color: #000;"></i>
+            </div>
+            <span>ALGO <span style="color: var(--text);">IQ</span></span>
+        </div>
+        <div class="nav-links" style="display: flex; gap: 32px; align-items: center;">
+            <a href="index.html" style="color: var(--text);">Home</a>
+            <a href="arjun.html">ARJUN</a>
+            <a href="vidur.html">VIDUR</a>
+            <a href="garuda.html">GARUDA</a>
+            <a href="chitragupta.html">CHITRAGUPTA</a>
+            <a href="sanjay.html">SANJAY</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="contact.html">Contact</a>
+            <a href="index.html" class="btn btn-secondary" style="padding: 8px 16px;">← All Agents</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 8px 16px; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 50px;">
+                <span style="padding: 4px 12px; background: linear-gradient(135deg, #ff9933, #ff6600); border-radius: 20px; font-size: 12px; font-weight: 600;">
+                    🇮🇳 Made in India | भारत का AI
+                </span>
+            </div>
+            <h1>🌐 <span>EKLAVYA</span> – Website Monitoring AI</h1>
+            <p id="hero-subtitle">Aapka AI Website Guardian – Jo 24x7 aapki website ko check karta hai aur problem hone se pehle alert deta hai. Aapki website chal rahi hai ya nahi — ab guess nahi, guarantee hogi!</p>
+            <div class="hero-buttons">
+                <a href="#features" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> See How It Works
+                </a>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section problems">
+        <div class="section-header">
+            <h2>⚠️ Problems EKLAVYA Solves</h2>
+            <p>Website errors cost you customers — silently</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Website Down – No Idea</h3>
+                <p>Website band hai… par aapko pata hi nahi</p>
+            </div>
+            <div class="problem-card">
+                <i class="fas fa-file-signature"></i>
+                <h3>Broken Forms = Lost Leads</h3>
+                <p>Contact form kaam nahi karta → direct revenue loss</p>
+            </div>
+            <div class="problem-card">
+                <i class="fas fa-link"></i>
+                <h3>Broken Links</h3>
+                <p>Customer click karta hai → error page → trust loss</p>
+            </div>
+            <div class="problem-card">
+                <i class="fas fa-search"></i>
+                <h3>Manual Checking Impossible</h3>
+                <p>Har page manually check karna practical nahi</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h2>📊 Impact</h2>
+            <p>Real results with EKLAVYA monitoring</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Uptime Visibility</p>
+            </div>
+            <div class="stat-item">
+                <h3>80%</h3>
+                <p>Faster Issue Detection</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Page Coverage</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Monitoring</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section features" id="features">
+        <div class="section-header">
+            <h2>🚀 EKLAVYA Core Features</h2>
+            <p>Simple, powerful website monitoring for every business</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-globe"></i>
+                <h3>Website Page Monitoring</h3>
+                <p>Sabhi pages daily auto-check, broken links detect karta hai</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-file-signature"></i>
+                <h3>Form Testing</h3>
+                <p>Contact forms test karta hai, lead submission verify karta hai</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-link"></i>
+                <h3>Link Validation</h3>
+                <p>Internal + external links check, social buttons verify</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>Uptime Monitoring</h3>
+                <p>Website live ya down - real-time check, downtime instant alert</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Responsiveness Check</h3>
+                <p>Mobile & desktop layout basic validation</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bell"></i>
+                <h3>Smart Alerts System</h3>
+                <p>WhatsApp alerts ⚡, email notifications, exact issue location</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Daily Reporting</h3>
+                <p>Daily website health report, weekly summary, issue tracking</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-list-check"></i>
+                <h3>Smart Checklist</h3>
+                <p>Daily automated checklist, important pages priority testing</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section problems">
+        <div class="section-header">
+            <h2>📩 Sample Alerts</h2>
+            <p>Real-time notifications so you can act instantly</p>
+        </div>
+        <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; max-width: 700px; margin: 0 auto;">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <i class="fas fa-times-circle" style="color: #ef4444;"></i>
+                <span>"Website down detected"</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <i class="fas fa-times-circle" style="color: #ef4444;"></i>
+                <span>"Contact form not submitting on /contact page"</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <i class="fas fa-times-circle" style="color: #ef4444;"></i>
+                <span>"Broken link found on homepage"</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 0;">
+                <i class="fas fa-times-circle" style="color: #ef4444;"></i>
+                <span>"Instagram link not working"</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-header">
+            <h2>📥 Download EKLAVYA One-Pager</h2>
+            <p>Get the complete EKLAVYA details</p>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 32px;">
+            <a href="#" onclick="alert('PDF Download: Coming Soon! Contact us on WhatsApp to get the one-pager.'); return false;" class="btn btn-primary" style="padding: 16px 32px;">
+                <i class="fas fa-file-pdf"></i> Download One-Pager (PDF)
+            </a>
+            <a href="https://wa.me/919999999999?text=Hi%2C%20I%20want%20to%20download%20the%20EKLAVYA%20One-Pager" class="btn btn-secondary" style="padding: 16px 32px;">
+                <i class="fab fa-whatsapp"></i> Get on WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <section class="section cta">
+
+    <section class="section">
+        <div class="section-header">
+            <h2>💰 Simple Pricing</h2>
+            <p>Choose the plan that fits your needs</p>
+        </div>
+        <div class="pricing-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; margin: 0 auto;">
+            <div class="pricing-card" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center;">
+                <h3 style="font-size: 18px; margin-bottom: 16px;">🟢 Basic Plan</h3>
+                <div class="price" style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 8px;">₹5,000<span style="font-size: 14px; color: var(--text-muted);">/month</span></div>
+                <ul style="list-style: none; text-align: left; margin: 24px 0; padding: 0;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Daily website checks</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Uptime monitoring</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Email alerts</li>
+                    <li style="padding: 8px 0;"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Weekly report</li>
+                </ul>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">Get Started</a>
+            </div>
+            <div class="pricing-card featured" style="background: var(--card-bg); border: 2px solid var(--primary); border-radius: 16px; padding: 32px; text-align: center;">
+                <div style="background: var(--primary); color: #000; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-block; margin-bottom: 12px;">MOST POPULAR</div>
+                <h3 style="font-size: 18px; margin-bottom: 16px;">🔵 Standard Plan</h3>
+                <div class="price" style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 8px;">₹10,000<span style="font-size: 14px; color: var(--text-muted);">/month</span></div>
+                <ul style="list-style: none; text-align: left; margin: 24px 0; padding: 0;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Page + form testing</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Link validation</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> WhatsApp alerts</li>
+                    <li style="padding: 8px 0;"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Daily report</li>
+                </ul>
+                <a href="https://wa.me/919999999999" class="btn btn-primary">Get Started</a>
+            </div>
+            <div class="pricing-card" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center;">
+                <h3 style="font-size: 18px; margin-bottom: 16px;">🔴 Pro Plan</h3>
+                <div class="price" style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 8px;">₹15,000<span style="font-size: 14px; color: var(--text-muted);">/month</span></div>
+                <ul style="list-style: none; text-align: left; margin: 24px 0; padding: 0;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Priority monitoring</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Faster alert system</li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid var(--border);"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Advanced reporting</li>
+                    <li style="padding: 8px 0;"><i class="fas fa-check" style="color: var(--success); margin-right: 8px;"></i> Support assistance</li>
+                </ul>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section problems">
+        <div class="section-header">
+            <h2>Problems EKLAVYA Solves</h2>
+            <p>Website errors cost you customers and revenue - silently</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Silent Downtime</h3>
+                <p>Website down hai par aapko pata hi nahi chalta - kabhi kuch miss ho jata hai</p>
+            </div>
+
+        <div class="problem-card">
+                <i class="fas fa-form"></i>
+                <h3>Broken Forms</h3>
+                <p>Lead forms kaam nahi karte - har lead goya, har conversion waste</p>
+            </div>
+            <div class="problem-card">
+                <i class="fas fa-plug"></i>
+                <h3>API Breakdowns</h3>
+                <p>API fail hota hai aur poora system crash ho jata hai</p>
+            </div>
+            <div class="problem-card">
+                <i class="fas fa-clock"></i>
+                <h3>Manual Testing</h3>
+                <p>Har baar manually check karna time waste - kabhi kuch miss bhi ho jata hai</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>Uptime Guaranteed</p>
+            </div>
+            <div class="stat-item">
+                <h3>85%</h3>
+                <p>Faster Issue Detection</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Coverage</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Active Monitoring</p>
+            </div>
+        </div>
+    </section>
+
+
+                <h3>Performance Intelligence</h3>
+                <p>Speed drop detection, load testing simulation, server response tracking, bottleneck identification.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-list-check"></i>
+                <h3>Self-Evolving Checklist</h3>
+                <p>Daily checklist khud update karta hai. Past bugs se learn karta hai. High-risk areas ko priority deta hai.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bell"></i>
+                <h3>Smart Alert System</h3>
+                <p>WhatsApp alerts in seconds, severity-based notifications, exact issue + location + impact.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-tools"></i>
+                <h3>Auto-Fix + Recommendation Engine</h3>
+                <p>Basic issues auto-fix. Complex issues ke liye root cause analysis aur developer-ready report.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Security & Risk Monitoring 💥</h3>
+                <p>Basic vulnerability detection, SSL & security checks, suspicious activity alerts.</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 60px 0; background: var(--secondary); position: relative; z-index: 1;">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 32px; margin-bottom: 32px;">Meet Other AI Agents</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <a href="arjun.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🏹 <strong>ARJUN</strong><br><span style="font-size: 13px; color: var(--text-muted);">Sales AI</span></a>
+                <a href="vidur.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🛡️ <strong>VIDUR</strong><br><span style="font-size: 13px; color: var(--text-muted);">Security AI</span></a>
+                <a href="vachan.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📜 <strong>VACHAN</strong><br><span style="font-size: 13px; color: var(--text-muted);">Legal AI</span></a>
+                <a href="drishti.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">👁️ <strong>DRISHTI</strong><br><span style="font-size: 13px; color: var(--text-muted);">Monitoring AI</span></a>
+                <a href="chitragupta.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📊 <strong>CHITRAGUPTA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Finance AI</span></a>
+                <a href="nakula.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🛒 <strong>NAKULA</strong><br><span style="font-size: 13px; color: var(--text-muted);">E-commerce AI</span></a>
+                <a href="chanakya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📈 <strong>CHANAKYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Strategy AI</span></a>
+                <a href="garuda.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🔍 <strong>GARUDA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Data AI</span></a>
+                <a href="sanjay.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🧠 <strong>SANJAY</strong><br><span style="font-size: 13px; color: var(--text-muted);">Engineering AI</span></a>
+                <a href="rakshak.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🅰️ <strong>RAKSHAK</strong><br><span style="font-size: 13px; color: var(--text-muted);">Compliance AI</span></a>
+                <a href="krishna.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">💬 <strong>KRISHNA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Support AI</span></a>
+                <a href="surya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">☀️ <strong>SURYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Operations AI</span></a>
+                <a href="kubera.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">💰 <strong>KUBERA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Accounts AI</span></a>
+                <a href="dronacharya.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">🏋️ <strong>DRONACHARYA</strong><br><span style="font-size: 13px; color: var(--text-muted);">Fitness AI</span></a>
+                <a href="vedvyas.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--text); transition: all 0.3s;">📚 <strong>VEDVYAS</strong><br><span style="font-size: 13px; color: var(--text-muted);">Education AI</span></a>
+                <a href="index.html" style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid var(--border); text-decoration: none; color: var(--accent); transition: all 0.3s; font-size: 24px;">→<br><span style="font-size: 13px; color: var(--text-muted);">View All Agents</span></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 ALGO IQ - AI Employees for Business</p>
+        <p><a href="index.html">← Back to Home</a></p>
+        <p style="margin-top: 10px; font-weight: 600; color: #ff9933;">
+            🇮🇳 Made in India | भारत में निर्मित
+        </p>
+    </footer>
+
+    <a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const translations = {
+            en: {
+                'hero-subtitle': 'Aapka AI Website Guardian – Jo 24x7 aapki website ko check karta hai aur problem hone se pehle alert deta hai'
+            },
+            hi: {
+                'hero-subtitle': 'आपका AI वेबसाइट गार्जियन – जो 24x7 आपकी वेबसाइट को चेक करता है और समस्या होने से पहले अलर्ट देता है'
+            },
+            gu: {
+                'hero-subtitle': 'તમારો AI Website Guardian – જે 24x7 તમારી વેબસાઇટ ચેક કરે છે અને સમસ્યા થતી અગાઉ અલર્ટ આપે છે'
+            }
+        };
+
+        function changeLanguage(lang) {
+            const elements = translations[lang];
+            for (let id in elements) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = elements[id];
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Demo - See ALGO IQ in Action</title>
+    <meta name="description" content="Experience how ALGO AI transforms your business. See live AI working on leads, support, and automation.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #030308; --secondary: #080812; --card-bg: #0e0e1a; --accent: #6366f1; --accent-light: #818cf8; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --text: #f8fafc; --text-muted: #94a3b8; --text-dim: #64748b; --border: rgba(255,255,255,0.06); --border-light: rgba(255,255,255,0.1); --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--primary); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+        .glow-orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.4; pointer-events: none; z-index: 0; }
+        .orb-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -200px; }
+        header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(3, 3, 8, 0.95); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); padding: 14px 0; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 800; text-decoration: none; }
+        .logo-icon { width: 42px; height: 42px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .logo span { color: var(--accent-light); }
+        .btn { padding: 14px 28px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s; border: none; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-primary { background: var(--gradient-primary); color: white; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(99, 102, 241, 0.5); }
+        .demo-section { min-height: 100vh; padding: 120px 0 60px; position: relative; z-index: 1; }
+        
+        .demo-card { background: var(--card-bg); border-radius: 24px; padding: 48px; border: 1px solid var(--border); max-width: 800px; margin: 0 auto; }
+        .step-indicator { display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; }
+        .step { display: flex; align-items: center; gap: 10px; opacity: 0.4; transition: all 0.3s; }
+        .step.active { opacity: 1; }
+        .step.completed { opacity: 1; color: var(--success); }
+        .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--secondary); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
+        .step.active .step-num { background: var(--accent); border-color: var(--accent); color: white; }
+        .step.completed .step-num { background: var(--success); border-color: var(--success); color: white; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+        .form-group input, .form-group select { width: 100%; padding: 16px 20px; background: var(--secondary); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 15px; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+        .checkbox-group { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .checkbox-item { background: var(--secondary); border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.3s; }
+        .checkbox-item:hover { border-color: var(--accent); }
+        .checkbox-item.selected { border-color: var(--accent); background: rgba(99, 102, 241, 0.1); }
+        .checkbox-item i { margin-right: 10px; color: var(--accent-light); }
+        
+        /* Simulation */
+        .simulation-window { background: var(--secondary); border-radius: 16px; padding: 24px; margin: 24px 0; border: 1px solid var(--border); }
+        .sim-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .sim-header .agent-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+        .sim-messages { min-height: 200px; }
+        .sim-message { padding: 16px; border-radius: 16px; margin-bottom: 16px; max-width: 85%; animation: fadeInUp 0.5s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .sim-message.customer { background: var(--card-bg); border-bottom-left-radius: 4px; }
+        .sim-message.ai { background: rgba(99, 102, 241, 0.15); margin-left: auto; border-bottom-right-radius: 4px; }
+        .sim-message .time { font-size: 10px; color: var(--text-dim); margin-top: 6px; }
+        
+        .sim-controls { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .agent-sim-btn { padding: 10px 16px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .agent-sim-btn:hover { border-color: var(--accent); }
+        .agent-sim-btn i { font-size: 16px; }
+        
+        /* Results */
+        .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 24px 0; }
+        .result-card { background: var(--secondary); border-radius: 16px; padding: 24px; text-align: center; border: 1px solid var(--border); }
+        .result-card .icon { width: 48px; height: 48px; background: rgba(99, 102, 241, 0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 20px; color: var(--accent); }
+        .result-card .value { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+        .result-card .label { font-size: 13px; color: var(--text-muted); }
+        
+        .roi-box { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(99, 102, 241, 0.1)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 32px; text-align: center; margin: 24px 0; }
+        .roi-box h3 { font-size: 24px; margin-bottom: 16px; }
+        .roi-box .current { color: var(--text-muted); text-decoration: line-through; font-size: 24px; }
+        .roi-box .projected { color: var(--success); font-size: 36px; font-weight: 700; }
+        
+        .close-section { text-align: center; margin-top: 32px; }
+        .close-section h2 { font-size: 28px; margin-bottom: 12px; }
+        .close-section p { color: var(--text-muted); margin-bottom: 24px; }
+        
+        @media (max-width: 768px) { .checkbox-group { grid-template-columns: 1fr; } .results-grid { grid-template-columns: 1fr; } .step span { display: none; } .demo-card { padding: 24px; } }
+    </style>
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span>ALGO IQ</span>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="profitability.html">ROI</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="demo.html">Demo</a>
+                <a href="deployment.html">Deployment</a>
+                <a href="faq.html">FAQ</a>
+            </nav>
+            <a href="https://wa.me/919999999999" class="btn btn-primary">
+                <i class="fab fa-whatsapp"></i> Chat Now
+            </a>
+        </div>
+    </header>
+
+    <section class="demo-section">
+        <div class="container">
+            <div class="demo-card">
+                <div class="step-indicator">
+                    <div class="step active" id="step1-indicator">
+                        <div class="step-num">1</div>
+                        <span>Your Business</span>
+                    </div>
+                    <div class="step" id="step2-indicator">
+                        <div class="step-num">2</div>
+                        <span>Live Demo</span>
+                    </div>
+                    <div class="step" id="step3-indicator">
+                        <div class="step-num">3</div>
+                        <span>Your Results</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Business Input -->
+                <div id="step1">
+                    <h2 style="text-align: center; margin-bottom: 8px;">Tell Us About Your Business</h2>
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 32px;">We'll show you exactly how AI can transform your operations</p>
+                    
+                    <div class="form-group">
+                        <label>Business Type</label>
+                        <select id="businessType">
+                            <option value="">Select your industry</option>
+                            <option value="clinic">🏥 Healthcare / Clinic</option>
+                            <option value="coaching">📚 Coaching / Education</option>
+                            <option value="ecommerce">🛒 E-commerce</option>
+                            <option value="realestate">🏢 Real Estate</option>
+                            <option value="restaurant">🍽️ Restaurant</option>
+                            <option value="salon">💇 Salon / Spa</option>
+                            <option value="fitness">💪 Gym / Fitness</option>
+                            <option value="retail">🏪 Retail Store</option>
+                            <option value="service">💼 Service Business</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Monthly Leads / Customers</label>
+                        <select id="leadVolume">
+                            <option value="50">Less than 50</option>
+                            <option value="100">50 - 100</option>
+                            <option value="250">100 - 250</option>
+                            <option value="500">250 - 500</option>
+                            <option value="1000">500+</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>What are your biggest challenges?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item" onclick="toggleCheck(this)" data-value="leads">
+                                <i class="fas fa-magnet"></i> Generating leads
+                            </div>
+                            <div class="checkbox-item" onclick="toggleCheck(this)" data-value="followup">
+                                <i class="fas fa-phone"></i> Missing follow-ups
+                            </div>
+                            <div class="checkbox-item" onclick="toggleCheck(this)" data-value="support">
+                                <i class="fas fa-headset"></i> Customer support
+                            </div>
+                            <div class="checkbox-item" onclick="toggleCheck(this)" data-value="time">
+                                <i class="fas fa-clock"></i> Time management
+                            </div>
+                            <div class="checkbox-item" onclick="toggleCheck(this)" data-value="costs">
+                                <i class="fas fa-wallet"></i> High costs
+                            </div>
+                            <div class="checkbox-item" onclick="toggleCheck(this)" data-value="errors">
+                                <i class="fas fa-bug"></i> Technical errors
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 16px;" onclick="runSimulation()">
+                        <i class="fas fa-play"></i> Run My AI Simulation
+                    </button>
+                </div>
+
+                <!-- Step 2: Live Simulation -->
+                <div id="step2" style="display: none;">
+                    <h2 style="text-align: center; margin-bottom: 8px;">🔴 Live AI Simulation Running</h2>
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">Watch AI work in real-time for your business scenario</p>
+                    
+                    <div class="simulation-window">
+                        <div class="sim-header">
+                            <div class="agent-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);"><i class="fas fa-bullseye" style="color: white;"></i></div>
+                            <div>
+                                <h4 style="font-size: 15px;">ARJUN - Sales AI</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">Simulating lead conversion</p>
+                            </div>
+                        </div>
+                        <div class="sim-messages" id="simMessages">
+                            <!-- Messages will be added here -->
+                        </div>
+                    </div>
+                    
+                    <div class="sim-controls">
+                        <button class="agent-sim-btn" onclick="showAgentSim('arjun')">
+                            <i class="fas fa-bullseye" style="color: #f59e0b;"></i> ARJUN Sales
+                        </button>
+                        <button class="agent-sim-btn" onclick="showAgentSim('vidur')">
+                            <i class="fas fa-headset" style="color: #8b5cf6;"></i> VIDUR Support
+                        </button>
+                        <button class="agent-sim-btn" onclick="showAgentSim('eklavya')">
+                            <i class="fas fa-shield-virus" style="color: #eab308;"></i> EKLAVYA Testing
+                        </button>
+                        <button class="agent-sim-btn" onclick="showAgentSim('krishna')">
+                            <i class="fas fa-brain" style="color: #10b981;"></i> KRISHNA Intelligence
+                        </button>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 24px;" onclick="showResults()">
+                        <i class="fas fa-chart-line"></i> See My Results
+                    </button>
+                </div>
+
+                <!-- Step 3: Results -->
+                <div id="step3" style="display: none;">
+                    <h2 style="text-align: center; margin-bottom: 8px;">🎉 Your AI Impact Results</h2>
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 16px;">Based on your business inputs</p>
+                    
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="icon"><i class="fas fa-magnet"></i></div>
+                            <div class="value" style="color: var(--accent);" id="resultLeads">+45%</div>
+                            <div class="label">More Leads</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="icon"><i class="fas fa-percentage"></i></div>
+                            <div class="value" style="color: var(--success);" id="resultConversion">+32%</div>
+                            <div class="label">Higher Conversion</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="icon"><i class="fas fa-clock"></i></div>
+                            <div class="value" style="color: var(--warning);" id="resultTime">70%</div>
+                            <div class="label">Time Saved</div>
+                        </div>
+                    </div>
+                    
+                    <div class="roi-box">
+                        <h3>💰 Your Projected Impact</h3>
+                        <div style="font-size: 18px; color: var(--text-muted); margin-bottom: 8px;">Current Monthly Revenue</div>
+                        <div class="current">₹5,00,000</div>
+                        <div style="margin: 16px 0;">↓</div>
+                        <div style="font-size: 18px; color: var(--text-muted); margin-bottom: 8px;">With ALGO AI</div>
+                        <div class="projected">₹6,60,000</div>
+                        <p style="margin-top: 16px; color: var(--success); font-size: 14px;">+32% increase projected</p>
+                    </div>
+                    
+                    <div class="close-section">
+                        <h2>Aap yeh system apne business mein chahoge?</h2>
+                        <p>Yeh system aapke business mein 7 din mein deploy ho sakta hai</p>
+                        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                            <a href="need-analysis.html" class="btn btn-primary" style="padding: 16px 32px;">
+                                <i class="fas fa-calendar-check"></i> Book Demo Now
+                            </a>
+                            <a href="pricing.html" class="btn btn-secondary" style="padding: 16px 32px;">
+                                <i class="fas fa-tag"></i> View Pricing
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let selectedProblems = [];
+        
+        function toggleCheck(element) {
+            element.classList.toggle('selected');
+            const value = element.dataset.value;
+            if (selectedProblems.includes(value)) {
+                selectedProblems = selectedProblems.filter(p => p !== value);
+            } else {
+                selectedProblems.push(value);
+            }
+        }
+        
+        function runSimulation() {
+            const businessType = document.getElementById('businessType').value;
+            const leadVolume = document.getElementById('leadVolume').value;
+            
+            if (!businessType) {
+                alert('Please select your business type');
+                return;
+            }
+            
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('step1-indicator').classList.remove('active');
+            document.getElementById('step1-indicator').classList.add('completed');
+            document.getElementById('step2-indicator').classList.add('active');
+            
+            showAgentSim('arjun');
+        }
+        
+        function showAgentSim(agent) {
+            const messages = document.getElementById('simMessages');
+            messages.innerHTML = '';
+            
+            const scenarios = {
+                arjun: [
+                    { type: 'customer', text: 'Hi, I\'m interested in your services. Can you tell me more?', time: 'Now' },
+                    { type: 'ai', text: 'Hi! Thank you for your interest. I\'m Arjun, your dedicated AI consultant. Let me understand your needs better. What specific service are you looking for?', time: 'Now' },
+                    { type: 'customer', text: 'I run a coaching institute, looking for student admissions', time: 'Now' },
+                    { type: 'ai', text: 'Perfect! Our AI system has helped 50+ coaching institutes increase admissions by 3x. Let me share some details:\n\n📚 Custom landing page\n📱 WhatsApp automation\n📊 Lead tracking\n\nWould you like to book a free demo?', time: 'Now' },
+                    { type: 'customer', text: 'Yes, tomorrow evening would be great', time: 'Now' },
+                    { type: 'ai', text: 'Confirmed! I\'ve booked your demo for tomorrow at 5 PM. You\'ll receive a WhatsApp reminder. Any specific questions you\'d like covered?', time: 'Now' }
+                ],
+                vidur: [
+                    { type: 'customer', text: 'What are your clinic timings?', time: 'Now' },
+                    { type: 'ai', text: 'Hello! Our clinic is open:\n\nMon-Sat: 9 AM - 8 PM\nSunday: 10 AM - 2 PM\n\nDo you need to book an appointment? I can help you schedule right now!', time: 'Now' },
+                    { type: 'customer', text: 'Yes, for tomorrow afternoon please', time: 'Now' },
+                    { type: 'ai', text: 'I\'ve checked our available slots. Tomorrow at 3 PM works. Should I confirm the appointment?', time: 'Now' },
+                    { type: 'customer', text: 'Sure, go ahead', time: 'Now' },
+                    { type: 'ai', text: '✅ Appointment confirmed!\n\nPatient Name: [Provided]\nDate: Tomorrow\nTime: 3:00 PM\n\nYou\'ll receive a reminder on WhatsApp. See you then!', time: 'Now' }
+                ],
+                eklavya: [
+                    { type: 'system', text: '🔍 Running automated tests...', time: 'Now' },
+                    { type: 'system', text: '⚠️ Issue detected on /contact page', time: 'Now' },
+                    { type: 'system', text: '📋 Issue: Contact form submit button not working on mobile\n\n🔧 Auto-fixing: Added responsive CSS\n✅ Fixed and verified', time: 'Now' },
+                    { type: 'system', text: '📊 Website Health Score: 98/100\n\n✅ All pages loading correctly\n✅ All forms working\n✅ API responses < 200ms', time: 'Now' }
+                ],
+                krishna: [
+                    { type: 'customer', text: 'I\'m confused about which course to choose', time: 'Now' },
+                    { type: 'ai', text: 'I understand your concern. Let me help you choose the best option. A few questions:\n\n1. What is your target batch timing?\n2. How many hours per week can you dedicate?\n3. What\'s your budget range?', time: 'Now' },
+                    { type: 'customer', text: 'Evening batch, 4 hours, around 15k budget', time: 'Now' },
+                    { type: 'ai', text: 'Based on your requirements, I recommend:\n\n🎯 "Evening Elite Batch" - ₹12,999\n• 4.5 hrs/week\n• Perfect for working professionals\n• 95% passing rate\n\nWould you like me to share the full course details?', time: 'Now' }
+                ]
+            };
+            
+            const agentNames = {
+                arjun: { name: 'ARJUN', role: 'Sales AI', icon: '#f59e0b' },
+                vidur: { name: 'VIDUR', role: 'Support AI', icon: '#8b5cf6' },
+                eklavya: { name: 'EKLAVYA', role: 'Testing AI', icon: '#eab308' },
+                krishna: { name: 'KRISHNA', role: 'Intelligence AI', icon: '#10b981' }
+            };
+            
+            const simHeader = document.querySelector('.sim-header .agent-icon');
+            const simTitle = document.querySelector('.sim-header h4');
+            const simSub = document.querySelector('.sim-header p');
+            
+            simHeader.style.background = `linear-gradient(135deg, ${agentNames[agent].icon}, ${agentNames[agent].icon})`;
+            simTitle.textContent = `${agentNames[agent].name} - ${agentNames[agent].role}`;
+            simSub.textContent = 'Simulating real business scenario';
+            
+            let delay = 0;
+            scenarios[agent].forEach(msg => {
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = `sim-message ${msg.type}`;
+                    div.innerHTML = `${msg.text}<div class="time">${msg.time}</div>`;
+                    messages.appendChild(div);
+                    messages.scrollTop = messages.scrollHeight;
+                }, delay);
+                delay += 1500;
+            });
+        }
+        
+        function showResults() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+            document.getElementById('step2-indicator').classList.remove('active');
+            document.getElementById('step2-indicator').classList.add('completed');
+            document.getElementById('step3-indicator').classList.add('active');
+            
+            // Calculate results based on inputs
+            const leadVolume = parseInt(document.getElementById('leadVolume').value);
+            const baseMultiplier = leadVolume > 250 ? 0.8 : (leadVolume > 100 ? 1 : 1.2);
+            
+            document.getElementById('resultLeads').textContent = `+${Math.round(35 * baseMultiplier)}%`;
+            document.getElementById('resultConversion').textContent = `+${Math.round(28 * baseMultiplier)}%`;
+            document.getElementById('resultTime').textContent = `${Math.round(65 + Math.random() * 15)}%`;
+        }
+    </script>
+</body>
+</html>

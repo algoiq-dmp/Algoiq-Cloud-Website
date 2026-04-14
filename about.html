@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About ALGO IQ - AI Employees for Business</title>
+    <meta name="description" content="About Algo IQ Software Solutions Pvt Ltd - Leading IT consulting and software development company specializing in FinTech solutions. 15+ years experience, 2000+ customers.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #030308;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --card-hover: #151528;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -150px; right: -150px; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366, #20b356);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0%, 100% { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 10px 50px rgba(37, 211, 102, 0.6); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(3, 3, 8, 0.9);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text { color: var(--text); }
+        .logo span { color: var(--accent-light); }
+
+        nav { display: flex; gap: 36px; align-items: center; }
+        nav a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s; }
+        nav a:hover { color: var(--text); }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(99, 102, 241, 0.5); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border: 1px solid var(--border-light);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366, #20b356);
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 180px 0 80px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse 80% 50% at 50% -30%, rgba(99, 102, 241, 0.2), transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 54px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.15;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero > .container > p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* About Content */
+        .about-section { padding: 80px 0; position: relative; z-index: 1; }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 { font-size: 38px; font-weight: 700; margin-bottom: 20px; }
+        .about-content p { color: var(--text-muted); font-size: 17px; margin-bottom: 24px; line-height: 1.8; }
+
+        .about-features {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .about-features li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .about-features li:last-child { border-bottom: none; }
+        .about-features li i {
+            width: 36px;
+            height: 36px;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            font-size: 14px;
+        }
+
+        .about-visual {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .about-visual .icon-large {
+            font-size: 80px;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-visual h3 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+        .about-visual p { color: var(--text-muted); font-size: 15px; }
+
+        /* Mission Vision */
+        .mv-section { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .mv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .mv-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .mv-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .mv-card h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .mv-card h3 i { color: var(--accent-light); }
+        .mv-card p { color: var(--text-muted); font-size: 16px; line-height: 1.7; }
+
+        /* Stats */
+        .stats-section { padding: 80px 0; position: relative; z-index: 1; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 52px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-card p { color: var(--text-muted); font-size: 16px; font-weight: 500; }
+
+        /* AI Agents Section */
+        .agents-section { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-header h2 { font-size: 38px; font-weight: 700; margin-bottom: 16px; }
+        .section-header p { font-size: 18px; color: var(--text-muted); }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .agent-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .agent-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .agent-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 16px;
+        }
+
+        .agent-card h4 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .agent-card p { font-size: 14px; color: var(--text-muted); }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(99, 102, 241, 0.2), transparent 60%);
+        }
+
+        .cta-section h2 { font-size: 38px; font-weight: 700; margin-bottom: 16px; }
+        .cta-section > .container > p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            padding: 50px 0 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: var(--secondary);
+        }
+
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; }
+        .footer-links a:hover { color: var(--text); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 28px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .mv-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .agents-grid { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span class="logo-text">ALGO <span>IQ</span></span>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="profitability.html">ROI</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="demo.html">Demo</a>
+                <a href="deployment.html">Deployment</a>
+                <a href="faq.html">FAQ</a>
+            </nav>
+            <a href="https://wa.me/919999999999" class="btn whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Chat Now
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 8px 16px; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 50px;">
+                <span style="padding: 4px 12px; background: linear-gradient(135deg, #ff9933, #ff6600); border-radius: 20px; font-size: 12px; font-weight: 600;">
+                    🇮🇳 Made in India | भारत में निर्मित
+                </span>
+            </div>
+            <h1>About <span class="highlight">ALGO IQ</span></h1>
+            <p>Leading IT consulting and software development company specializing in FinTech solutions. Empowering businesses with AI automation since 2018.</p>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Building the Future of Work</h2>
+                    <p>Algo IQ Software Solutions Pvt Ltd is a leading IT consulting and software development company specializing in financial technology (FinTech) solutions.</p>
+                    <p>Founded with a vision to transform trading and brokerage technology, we started as a Delta Trading software company and expanded into full-scale IT services in 2018. Today, we empower brokers, traders, and fintech businesses with scalable, secure, and high-performance software solutions.</p>
+                    
+                    <ul class="about-features">
+                        <li><i class="fas fa-check"></i> Custom SaaS Software Development</li>
+                        <li><i class="fas fa-check"></i> Trading Platforms & Algo Systems</li>
+                        <li><i class="fas fa-check"></i> API Integrations & Market Data Systems</li>
+                        <li><i class="fas fa-check"></i> Risk Management & Compliance Tools</li>
+                        <li><i class="fas fa-check"></i> CRM & Business Automation Solutions</li>
+                        <li><i class="fas fa-check"></i> AI-Based Business Automation</li>
+                    </ul>
+                </div>
+                <div class="about-visual">
+                    <div class="icon-large"><i class="fas fa-building"></i></div>
+                    <h3>Algo IQ Software Solutions</h3>
+                    <p>Pvt Ltd</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mv-section">
+        <div class="container">
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                    <p>To bridge the gap between financial markets and advanced technology by delivering intelligent, scalable, and user-friendly software solutions that drive business growth.</p>
+                </div>
+                <div class="mv-card">
+                    <h3><i class="fas fa-eye"></i> Our Vision</h3>
+                    <p>To become India's most trusted FinTech SaaS provider, enabling businesses to grow with automation, AI, and smart trading infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">20,000+</div>
+                    <p>Traders Served</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <p>Software Deployments</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2000+</div>
+                    <p>Happy Customers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="agents-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Your AI Workforce</h2>
+                <p>We're introducing AI-powered business automation agents designed to work like human employees — but faster, smarter, and 24/7.</p>
+            </div>
+
+            <div class="agents-grid">
+                <div class="agent-card">
+                    <div class="agent-icon">🏹</div>
+                    <h4>ARJUN</h4>
+                    <p>Sales AI - Lead Conversion</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🧠</div>
+                    <h4>VIDUR</h4>
+                    <p>Support AI - Customer Handling</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">👁️</div>
+                    <h4>DRISHTI</h4>
+                    <p>Monitoring AI - Camera & Security</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🗣️</div>
+                    <h4>VACHAN</h4>
+                    <p>Meeting AI - Transcription</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🟤</div>
+                    <h4>NAKUL</h4>
+                    <p>Procurement AI - Automation</p>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-icon">🤖</div>
+                    <h4>KRISHNA</h4>
+                    <p>Intelligence AI - Decision Making</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Build Your AI Workforce?</h2>
+            <p>Join 2000+ Indian businesses already using ALGO IQ to automate and scale faster.</p>
+            <div class="cta-buttons">
+                <a href="book-demo.html" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Book Free Demo
+                </a>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="why-choose-us.html">Why Choose Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <p>&copy; 2026 ALGO IQ Software Solutions Pvt Ltd. All rights reserved.</p>
+            <p style="margin-top: 10px; font-weight: 600; color: #ff9933;">
+                🇮🇳 Made in India | भारत में निर्मित | For India, By India
+            </p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+</html>

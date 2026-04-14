@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Demo | ALGO IQ - AI Employees</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #030308; --secondary: #080812; --card-bg: #0e0e1a; --accent: #6366f1; --accent-light: #818cf8; --success: #10b981; --text: #f8fafc; --text-muted: #94a3b8; --border: rgba(255,255,255,0.06); --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--primary); color: var(--text); line-height: 1.7; padding: 40px 24px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 800; text-decoration: none; margin-bottom: 40px; justify-content: center; }
+        .logo-icon { width: 42px; height: 42px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+        .logo span { color: var(--accent-light); }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 40px; border: 1px solid var(--border); margin-bottom: 24px; }
+        .card h2 { font-size: 28px; margin-bottom: 8px; text-align: center; }
+        .card .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 32px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 18px; background: var(--secondary); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 15px; font-family: inherit; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+        .btn { width: 100%; padding: 16px; background: var(--gradient-primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4); }
+        .or-divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; }
+        .or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .or-divider span { color: var(--text-muted); font-size: 14px; }
+        .whatsapp-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #25D366, #20b356); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; transition: all 0.3s; }
+        .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
+        .pricing-note { text-align: center; margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+        .pricing-note a { color: var(--accent-light); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+            <span>ALGO IQ</span>
+        </a>
+        <a href="https://wa.me/919999999999" class="whatsapp-btn" style="position: fixed; top: 20px; right: 20px; width: auto; padding: 12px 20px;">
+            <i class="fab fa-whatsapp"></i> Chat Now
+        </a>
+
+        <div class="card">
+            <h2>Book Your Free Demo</h2>
+            <p class="subtitle">See how AI can transform your business</p>
+
+            <form id="demoForm">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label>Business Name *</label>
+                    <input type="text" name="business" required placeholder="Company name">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" name="phone" required placeholder="+91 98765 43210">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="you@company.com">
+                </div>
+                <div class="form-group">
+                    <label>Business Type</label>
+                    <select name="businessType">
+                        <option value="">Select type</option>
+                        <option value="clinic">Clinic / Healthcare</option>
+                        <option value="coaching">Coaching / Education</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="service">Service Business</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>What are your main challenges?</label>
+                    <select name="challenge">
+                        <option value="">Select challenge</option>
+                        <option value="leads">Generating & converting leads</option>
+                        <option value="support">Customer support management</option>
+                        <option value="operations">Operations efficiency</option>
+                        <option value="multiple">Multiple areas</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-calendar-check"></i> Schedule Demo</button>
+            </form>
+
+            <div class="or-divider"><span>OR</span></div>
+
+            <a href="https://wa.me/919999999999" class="whatsapp-btn" target="_blank">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+        </div>
+
+        <p class="pricing-note">See our pricing: <a href="pricing.html">View Plans</a> | Already know what you need? <a href="profitability.html">Calculate ROI</a></p>
+    </div>
+
+    <script>
+        document.getElementById('demoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            let message = "Hi ALGO IQ! I want to book a demo:\n\n";
+            message += "Name: " + formData.get('name') + "\n";
+            message += "Business: " + formData.get('business') + "\n";
+            message += "Phone: " + formData.get('phone') + "\n";
+            if(formData.get('email')) message += "Email: " + formData.get('email') + "\n";
+            if(formData.get('businessType')) message += "Type: " + formData.get('businessType') + "\n";
+            if(formData.get('challenge')) message += "Challenge: " + formData.get('challenge') + "\n";
+            window.location.href = "https://wa.me/919999999999?text=" + encodeURIComponent(message);
+        });
+    </script>
+</body>
+</html>

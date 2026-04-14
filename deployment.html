@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Start | ALGO IQ - AI Employees for Business</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #030308;
+            --secondary: #080812;
+            --card-bg: #0e0e1a;
+            --card-hover: #151528;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.1);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -200px; }
+        .orb-2 { width: 500px; height: 500px; background: #8b5cf6; bottom: -150px; right: -150px; }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(3, 3, 8, 0.9);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text { color: var(--text); }
+        .logo span { color: var(--accent-light); }
+
+        nav { display: flex; gap: 36px; align-items: center; }
+        nav a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; transition: all 0.3s; }
+        nav a:hover { color: var(--text); }
+
+        .btn {
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 35px rgba(99, 102, 241, 0.5); }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border: 1px solid var(--border-light);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366, #20b356);
+            color: white;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 180px 0 80px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse 80% 50% at 50% -30%, rgba(99, 102, 241, 0.2), transparent 60%);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--success);
+            margin-bottom: 28px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 54px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.15;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero > .container > p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 36px;
+        }
+
+        /* Process Steps */
+        .process { padding: 80px 0; position: relative; z-index: 1; }
+
+        .section-header { text-align: center; margin-bottom: 56px; }
+        .section-header h2 { font-size: 38px; font-weight: 700; margin-bottom: 16px; }
+        .section-header p { font-size: 18px; color: var(--text-muted); }
+
+        .steps-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--success));
+            transform: translateX(-50%);
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            flex-shrink: 0;
+            z-index: 1;
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .step-content {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .step-content:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .step-content h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-content h3 i { color: var(--accent); }
+
+        .step-content .tagline {
+            color: var(--accent-light);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .step-content ul {
+            list-style: none;
+        }
+
+        .step-content li {
+            padding: 8px 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-content li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--success);
+            font-size: 12px;
+        }
+
+        .timeline-connector {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+        }
+
+        /* Timeline */
+        .timeline { padding: 60px 0 100px; position: relative; z-index: 1; }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+        }
+
+        .timeline-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .timeline-card::after {
+            content: '\f053';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            font-size: 12px;
+        }
+
+        .timeline-card:last-child::after { display: none; }
+
+        .timeline-day {
+            background: var(--gradient-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0 auto 16px;
+        }
+
+        .timeline-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+        .timeline-card p { font-size: 13px; color: var(--text-muted); }
+
+        /* Questionnaire */
+        .questionnaire { padding: 80px 0; position: relative; z-index: 1; }
+
+        .questionnaire-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .questionnaire-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .questionnaire-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .questionnaire-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-light);
+        }
+
+        .questionnaire-card ul { list-style: none; }
+        .questionnaire-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .questionnaire-card li:last-child { border-bottom: none; }
+
+        /* Documents */
+        .documents { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .docs-column {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--border);
+        }
+
+        .docs-column h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .docs-column:first-child h3 { color: var(--danger); }
+        .docs-column:last-child h3 { color: var(--warning); }
+
+        .docs-column ul { list-style: none; }
+        .docs-column li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .docs-column li:last-child { border-bottom: none; }
+        .docs-column li i:first-child { color: var(--success); }
+
+        /* Training */
+        .training { padding: 80px 0; position: relative; z-index: 1; }
+
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .training-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .training-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .training-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .training-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+        .training-card ul { list-style: none; text-align: left; }
+        .training-card li {
+            padding: 8px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .training-card li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-size: 11px;
+        }
+
+        /* Test Cases */
+        .testcases { padding: 80px 0; background: var(--secondary); position: relative; z-index: 1; }
+
+        .testcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .testcase-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .testcase-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .testcase-header { margin-bottom: 20px; }
+
+        .testcase-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 12px;
+        }
+
+        .testcase-header h3 { font-size: 20px; font-weight: 700; }
+
+        .testcase-scenario {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 3px solid var(--warning);
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .testcase-flow { margin-bottom: 20px; }
+        .testcase-flow h4 { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: var(--text-muted); }
+        .testcase-flow ol { padding-left: 20px; }
+        .testcase-flow li { padding: 6px 0; font-size: 14px; color: var(--text-muted); }
+
+        .testcase-example {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--success);
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .testcase-example strong { display: block; font-size: 12px; color: var(--success); margin-bottom: 8px; }
+        .testcase-example p { font-size: 14px; font-style: italic; color: var(--text); }
+
+        .testcase-result {
+            background: var(--gradient-success);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Deliverables */
+        .deliverables { padding: 80px 0; position: relative; z-index: 1; }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .deliverable-item {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .deliverable-item:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .deliverable-item i {
+            font-size: 36px;
+            margin-bottom: 16px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .deliverable-item h4 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+        .deliverable-item p { font-size: 13px; color: var(--text-muted); }
+
+        /* Why Works */
+        .why-works { padding: 80px 0; position: relative; z-index: 1; }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .why-item {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 28px 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .why-item:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+        .why-item .why-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 16px;
+        }
+
+        .why-item h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+        .why-item p { font-size: 13px; color: var(--text-muted); }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%);
+        }
+
+        .cta-section h2 { font-size: 38px; font-weight: 700; margin-bottom: 16px; }
+        .cta-section > .container > p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+
+        footer {
+            padding: 50px 0 30px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: var(--secondary);
+        }
+
+        footer p { color: var(--text-muted); font-size: 14px; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .steps-container::before { left: 32px; }
+            .step, .step:nth-child(even) { flex-direction: column; gap: 20px; }
+            .step-number { width: 56px; height: 56px; font-size: 20px; }
+            .timeline-grid { grid-template-columns: 1fr 1fr; }
+            .timeline-card::after { display: none; }
+            nav { display: none; }
+            .hero h1 { font-size: 28px; }
+            .docs-grid { grid-template-columns: 1fr; }
+            .training-grid { grid-template-columns: 1fr 1fr; }
+            .deliverables-grid { grid-template-columns: 1fr 1fr; }
+            .why-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+                <span class="logo-text">ALGO <span>IQ</span></span>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="profitability.html">ROI</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="demo.html">Demo</a>
+                <a href="deployment.html">Deployment</a>
+                <a href="faq.html">FAQ</a>
+            </nav>
+            <a href="https://wa.me/919999999999" class="btn whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> Chat Now
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <i class="fas fa-rocket"></i> Deploy in 3-7 Days
+            </div>
+            <h1>Apni Company Mein AI Employees<br><span class="highlight">Kaise Deploy Karein?</span></h1>
+            <p>3 se 7 din mein aapka business AI-powered ho sakta hai. Step-by-step deployment process - seedha, simple, effective.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="#process" class="btn btn-primary">
+                    <i class="fas fa-play"></i> See Process
+                </a>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <div class="container">
+            <div class="section-header">
+                <h2>Quick Timeline</h2>
+                <p>From sign-up to AI-powered business in just 7 days</p>
+            </div>
+            <div class="timeline-grid">
+                <div class="timeline-card">
+                    <div class="timeline-day">Day 1</div>
+                    <h4>Analysis</h4>
+                    <p>Business review</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-day">Day 2</div>
+                    <h4>Strategy</h4>
+                    <p>AI mapping</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-day">Day 3-4</div>
+                    <h4>Training</h4>
+                    <p>Data input</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-day">Day 5</div>
+                    <h4>Integration</h4>
+                    <p>Connect systems</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-day">Day 6</div>
+                    <h4>Testing</h4>
+                    <p>Go live</p>
+                </div>
+                <div class="timeline-card">
+                    <div class="timeline-day">Day 7+</div>
+                    <h4>Scale</h4>
+                    <p>Optimize</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-header">
+                <h2>Step-by-Step Deployment</h2>
+                <p>Our proven 6-step process ensures smooth AI implementation</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-search"></i> Business Analysis</h3>
+                        <p class="tagline">"Aapka business samajhna"</p>
+                        <ul>
+                            <li>Current process analysis</li>
+                            <li>Lead flow & support mapping</li>
+                            <li>Problem identification</li>
+                            <li>Goal setting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-chess"></i> AI Strategy Design</h3>
+                        <p class="tagline">"Kaunsa Agent kahan use hoga"</p>
+                        <ul>
+                            <li>Arjun → Sales pipeline</li>
+                            <li>Vidur → Support automation</li>
+                            <li>Krishna → Complex decisions</li>
+                            <li>Operations agents mapping</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-brain"></i> Data & Training</h3>
+                        <p class="tagline">"AI ko aapka business sikhana"</p>
+                        <ul>
+                            <li>FAQ document setup</li>
+                            <li>Sales script integration</li>
+                            <li>Customer scenario training</li>
+                            <li>Business-specific customization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-plug"></i> Integration</h3>
+                        <p class="tagline">"System connect karna"</p>
+                        <ul>
+                            <li>WhatsApp Business integration</li>
+                            <li>Website chatbot setup</li>
+                            <li>CRM connection</li>
+                            <li>Email system sync</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-rocket"></i> Go Live</h3>
+                        <p class="tagline">"AI kaam shuru karta hai"</p>
+                        <ul>
+                            <li>Live testing phase</li>
+                            <li>Real conversation handling</li>
+                            <li>Performance monitoring</li>
+                            <li>Fine-tuning</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3><i class="fas fa-chart-line"></i> Optimization</h3>
+                        <p class="tagline">"Har week better performance"</p>
+                        <ul>
+                            <li>Weekly performance reports</li>
+                            <li>Continuous improvements</li>
+                            <li>AI learning enhancement</li>
+                            <li>Scale recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="questionnaire">
+        <div class="container">
+            <div class="section-header">
+                <h2>Client Questionnaire</h2>
+                <p>Fill this before deployment - helps us understand your business better</p>
+            </div>
+            
+            <div class="questionnaire-grid">
+                <div class="questionnaire-card">
+                    <h3><i class="fas fa-building"></i> Business Basics</h3>
+                    <ul>
+                        <li>Company Name</li>
+                        <li>Industry Type</li>
+                        <li>Target Customers</li>
+                        <li>Location / Cities Covered</li>
+                    </ul>
+                </div>
+                <div class="questionnaire-card">
+                    <h3><i class="fas fa-chart-line"></i> Sales Process</h3>
+                    <ul>
+                        <li>Lead Sources (Ads/Referral/Website)</li>
+                        <li>Average Deal Size</li>
+                        <li>Conversion Time (days)</li>
+                        <li>Sales Team Structure</li>
+                    </ul>
+                </div>
+                <div class="questionnaire-card">
+                    <h3><i class="fas fa-headset"></i> Support System</h3>
+                    <ul>
+                        <li>Daily Query Count</li>
+                        <li>Common Customer Issues</li>
+                        <li>Support Channels (WhatsApp/Call/Email)</li>
+                    </ul>
+                </div>
+                <div class="questionnaire-card">
+                    <h3><i class="fas fa-bullseye"></i> Goals</h3>
+                    <ul>
+                        <li>Sales Increase Target (%)</li>
+                        <li>Cost Reduction Goal</li>
+                        <li>Automation Level Required</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="documents">
+        <div class="container">
+            <div class="section-header">
+                <h2>Documents Required</h2>
+                <p>What we need from you before starting deployment</p>
+            </div>
+            
+            <div class="docs-grid">
+                <div class="docs-column">
+                    <h3><i class="fas fa-exclamation-circle"></i> Mandatory</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Product / Service details</li>
+                        <li><i class="fas fa-check"></i> Pricing structure</li>
+                        <li><i class="fas fa-check"></i> FAQ document (if available)</li>
+                        <li><i class="fas fa-check"></i> Existing sales scripts</li>
+                        <li><i class="fas fa-check"></i> Customer interaction samples</li>
+                    </ul>
+                </div>
+                <div class="docs-column">
+                    <h3><i class="fas fa-star"></i> Optional (Recommended)</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> CRM access</li>
+                        <li><i class="fas fa-check"></i> Website admin access</li>
+                        <li><i class="fas fa-check"></i> WhatsApp Business account</li>
+                        <li><i class="fas fa-check"></i> Marketing creatives</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="training">
+        <div class="container">
+            <div class="section-header">
+                <h2>Training Process</h2>
+                <p>How we train AI to understand your business</p>
+            </div>
+            
+            <div class="training-grid">
+                <div class="training-card">
+                    <div class="training-icon">1</div>
+                    <h3>Knowledge Transfer</h3>
+                    <ul>
+                        <li>Business understanding session</li>
+                        <li>Product deep-dive</li>
+                        <li>Process documentation</li>
+                    </ul>
+                </div>
+                <div class="training-card">
+                    <div class="training-icon">2</div>
+                    <h3>Script Training</h3>
+                    <ul>
+                        <li>Sales pitch creation</li>
+                        <li>Objection handling</li>
+                        <li>Closing strategies</li>
+                    </ul>
+                </div>
+                <div class="training-card">
+                    <div class="training-icon">3</div>
+                    <h3>Scenario Training</h3>
+                    <ul>
+                        <li>Happy customer flows</li>
+                        <li>Angry customer handling</li>
+                        <li>Confused lead nurturing</li>
+                    </ul>
+                </div>
+                <div class="training-card">
+                    <div class="training-icon">4</div>
+                    <h3>AI Learning</h3>
+                    <ul>
+                        <li>Tone & language adaptation</li>
+                        <li>Local language support (Hindi/Gujarati)</li>
+                        <li>Continuous learning setup</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testcases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Test Cases</h2>
+                <p>Real conversation scenarios our AI handles perfectly</p>
+            </div>
+            
+            <div class="testcase-grid">
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <span class="testcase-badge">Arjun AI - Sales</span>
+                        <h3>Lead Conversion</h3>
+                    </div>
+                    <div class="testcase-scenario">
+                        <strong>Scenario:</strong> Customer asks "Price kya hai?"
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Expected Flow:</h4>
+                        <ol>
+                            <li>Greeting & personalization</li>
+                            <li>Requirement understanding</li>
+                            <li>Product explanation</li>
+                            <li>Price justification</li>
+                            <li>CTA (book call/demo)</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-example">
+                        <strong>Example:</strong>
+                        <p>"Sir, aap kis purpose ke liye use karna chahte hain? Main aapko best plan suggest karta hoon..."</p>
+                    </div>
+                    <div class="testcase-result">Result: Lead qualification + appointment booking</div>
+                </div>
+                
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <span class="testcase-badge">Vidur AI - Support</span>
+                        <h3>Customer Support</h3>
+                    </div>
+                    <div class="testcase-scenario">
+                        <strong>Scenario:</strong> Customer complains "System kaam nahi kar raha"
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Expected Flow:</h4>
+                        <ol>
+                            <li>Issue identification</li>
+                            <li>Basic troubleshooting</li>
+                            <li>Remote help offer</li>
+                            <li>Escalation if needed</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-example">
+                        <strong>Example:</strong>
+                        <p>"Sir, kya aap error message share kar sakte hain? Main turant check karke solution deta hoon..."</p>
+                    </div>
+                    <div class="testcase-result">Result: Fast resolution + ticket creation</div>
+                </div>
+                
+                <div class="testcase-card">
+                    <div class="testcase-header">
+                        <span class="testcase-badge">Krishna AI - Decision</span>
+                        <h3>Complex Issues</h3>
+                    </div>
+                    <div class="testcase-scenario">
+                        <strong>Scenario:</strong> Customer demands refund/negotiation
+                    </div>
+                    <div class="testcase-flow">
+                        <h4>Expected Flow:</h4>
+                        <ol>
+                            <li>Situation understanding</li>
+                            <li>Policy reference</li>
+                            <li>Smart negotiation</li>
+                            <li>Final decision / escalation</li>
+                        </ol>
+                    </div>
+                    <div class="testcase-example">
+                        <strong>Example:</strong>
+                        <p>"Sir, main aapki concern samajh raha hoon. Main aapko best possible solution suggest karta hoon..."</p>
+                    </div>
+                    <div class="testcase-result">Result: Customer retention + smart decision</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="deliverables">
+        <div class="container">
+            <div class="section-header">
+                <h2>What You Get After Deployment</h2>
+                <p>Complete AI workforce ready to work for your business</p>
+            </div>
+            
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <i class="fas fa-robot"></i>
+                    <h4>Trained AI Employees</h4>
+                    <p>Fully customized to your business</p>
+                </div>
+                <div class="deliverable-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h4>Live Dashboard</h4>
+                    <p>Real-time monitoring</p>
+                </div>
+                <div class="deliverable-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>Daily Reports</h4>
+                    <p>Performance tracking</p>
+                </div>
+                <div class="deliverable-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <h4>WhatsApp Automation</h4>
+                    <p>Instant response</p>
+                </div>
+                <div class="deliverable-item">
+                    <i class="fas fa-globe"></i>
+                    <h4>Website Integration</h4>
+                    <p>24/7 chatbot</p>
+                </div>
+                <div class="deliverable-item">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>Continuous Improvement</h4>
+                    <p>Weekly optimization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Our Deployment Works</h2>
+                <p>What makes our AI implementation different</p>
+            </div>
+            
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Simple & Fast</h3>
+                    <p>Deploy in just 3-7 days. No complicated setup, no long waiting period.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Business-Specific</h3>
+                    <p>Every AI is customized to your business needs, not generic templates.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-user-friends"></i></div>
+                    <h3>Human-Like AI</h3>
+                    <p>Natural conversations that feel like talking to a real employee.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Real ROI Focus</h3>
+                    <p>Every deployment is designed to deliver measurable business results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Deploy Your AI Team?</h2>
+            <p>7 din mein AI employee deploy karein aur business growth mein leap lein.</p>
+            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="book-demo.html" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Book Free Demo
+                </a>
+                <a href="https://wa.me/919999999999" class="btn btn-secondary">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 ALGO IQ. All rights reserved. | <a href="index.html">Back to Home</a></p>
+        </div>
+    </footer>
+</body>
+</html>
