@@ -1,12 +1,12 @@
 {
   "name": "algoiq-cloud-website",
   "version": "1.0.0",
-  "description": "Static website for Algoiq Cloud",
-  "main": "index.html",
+  "description": "Premium static website for Algoiq Cloud",
+  "main": "public/index.html",
   "scripts": {
-    "build": "echo 'Static site: No build required.'",
-    "start": "npx serve ."
+    "build": "echo 'Build complete (Static Content)'",
+    "start": "npx serve public"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "AlgoIQ",
+  "license": "MIT"
 }
